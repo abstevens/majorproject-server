@@ -1,0 +1,4 @@
+vagrant ansible_ssh_host=10.3.3.31
+
+[servers]
+vagrant

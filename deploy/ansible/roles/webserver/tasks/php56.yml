@@ -1,0 +1,27 @@
+---
+- name: Installing PHP 5.6 with Extensions
+  yum: name={{ item }} state=present
+  with_items:
+      - php56w
+      - php56w-bcmath
+      - php56w-cli
+      - php56w-common
+      - php56w-devel
+      - php56w-fpm
+      - php56w-gd
+      - php56w-intl
+      - php56w-mbstring
+      - php56w-mcrypt
+      - php56w-mysqlnd
+      - php56w-pdo
+      - php56w-pear
+      - php56w-pecl-xdebug
+      - php56w-pecl-redis
+      - php56w-pecl-imagick
+      - php56w-soap
+      - php56w-xml
+
+
+#- name: Start and Enable Services
+#  service: name=php-fpm enabled=yes
+#  service: name=php-fpm state=started

@@ -1,0 +1,9 @@
+---
+- include: httpd.yml
+- include: mysql.yml
+- include: node.yml
+#- include: php56.yml
+- include: php70.yml
+
+- include: composer.yml
+- include: bower.yml

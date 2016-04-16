@@ -1,0 +1,11 @@
+---
+- hosts: all
+  #sudo: true
+
+  roles:
+    - {role: common, sudo: yes}
+    - {role: repositories, sudo: yes}
+    - {role: webserver, sudo: yes}
+
+  handlers:
+    - include: handlers/handlers.yml

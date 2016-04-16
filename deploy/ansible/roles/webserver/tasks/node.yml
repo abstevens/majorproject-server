@@ -1,0 +1,6 @@
+---
+- name: Install NodeJS and NPM
+  yum: name={{ item }} state=present
+  with_items:
+    - nodejs
+    - npm

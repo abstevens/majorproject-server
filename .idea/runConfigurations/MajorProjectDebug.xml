@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MajorProjectDebug" type="PhpRemoteDebugRunConfigurationType" factoryName="PHP Remote Debug" singleton="true" server_name="MajorProjectV2" session_id="xdebug">
+    <method />
+  </configuration>
+</component>

@@ -1,0 +1,29 @@
+---
+- name: Installing Apache httpd
+  yum: name=httpd state=present
+
+- name: Start and Enable Apache httpd
+  service: name=httpd enabled=yes
+  notify:
+    - start httpd
+
+- name: Open Firewall ports for http and https
+  firewalld: service={{ item }} permanent=true state=enabled zone=public
+  with_items:
+    - http
+    - https
+  notify:
+    - restart firewalld
+
+- name: Delete default httpd config file
+  file: path=/etc/httpd/conf/httpd.conf state=absent
+
+# Selinux still blocks the file access for httpd, need to fix this someday... maybe...
+- name: Create a link to the httpd config file in deploy folder with a proper selinux context
+  file: |
+      src=/var/www/deploy/ansible/roles/webserver/files/dev/httpd/httpd.conf
+      dest=/etc/httpd/conf/httpd.conf
+      state=link
+      setype=httpd_config_t
+  notify:
+      - restart httpd

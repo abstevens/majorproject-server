@@ -1,0 +1,29 @@
+---
+# FirewallD
+- name: restart firewalld
+  service: name=firewalld state=restarted
+  sudo: yes
+
+# PHP-FPM
+- name: restart php-fpm
+  service: name=php-fpm state=restarted
+  sudo: yes
+
+# Nginx
+- name: restart nginx
+  service: name=nginx state=restarted
+  sudo: yes
+
+# Apache httpd
+- name: start httpd
+  service: name=httpd state=started
+  sudo: yes
+
+- name: restart httpd
+  service: name=httpd state=restarted
+  sudo: yes
+
+# MySQL
+- name: restart mysqld
+  service: name=mysqld state=restarted
+  sudo: yes

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpProjectServersManager">
+    <servers>
+      <server host="10.3.3.31" id="e12b3441-4b96-4f11-8836-fcf22ca2cc83" name="MajorProjectV2" use_path_mappings="true">
+        <path_mappings>
+          <mapping local-root="$PROJECT_DIR$" remote-root="/var/www/application" />
+        </path_mappings>
+      </server>
+    </servers>
+  </component>
+</project>
