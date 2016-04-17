@@ -32,6 +32,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
 
     Route::resource('school', 'SchoolController');
-
     Route::resource('course', 'CourseController');
+    Route::resource('user', 'UserController');
+    Route::resource('event', 'EventController');
+    Route::resource('news', 'NewsController');
+    Route::resource('role', 'RoleController');
+    Route::resource('permission', 'PermissionController');
+    Route::resource('award', 'AwardController');
 });

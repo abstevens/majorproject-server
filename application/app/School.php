@@ -9,6 +9,22 @@ class School extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = ['name', 'date'];
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function setName($name)
+    {
+        if (!empty($name) && strlen($name) > 3) {
+            $this->name = $name;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Is required only to get the "Student Code"
      * Since we want to keep one User entry but allow Switching schools
