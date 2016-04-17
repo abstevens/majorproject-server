@@ -13,9 +13,9 @@ machine:
   timezone:
     Europe/Amsterdam
 
-#dependencies:
-#  override:
-#    - composer install --prefer-source --no-interaction
+dependencies:
+  override:
+    - composer install -d ./application --no-interaction
 
 test:
   override:
