@@ -4,7 +4,6 @@ namespace app\Http\Controllers;
 
 use app\Award;
 use Illuminate\Http\Request;
-
 use app\Http\Requests;
 
 class AwardController extends Controller

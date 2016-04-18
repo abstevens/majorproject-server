@@ -4,7 +4,6 @@ namespace app\Http\Controllers;
 
 use app\User;
 use Illuminate\Http\Request;
-
 use app\Http\Requests;
 
 class UserController extends Controller
