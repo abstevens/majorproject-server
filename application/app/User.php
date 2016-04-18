@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace app;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -33,71 +33,71 @@ class User extends Authenticatable
      */
     public function schoolUsers()
     {
-        return $this->hasMany('App\SchoolUser');
+        return $this->hasMany('app\SchoolUser');
     }
 
     public function schools()
     {
-        return $this->belongsToMany('App\School');
+        return $this->belongsToMany('app\School');
     }
 
     public function marks()
     {
-        return $this->hasOne('App\Mark');
+        return $this->hasOne('app\Mark');
     }
 
     public function details()
     {
-        return $this->hasMany('App\Detail');
+        return $this->hasMany('app\Detail');
     }
 
     public function contacts()
     {
-        return $this->hasMany('App\Contact');
+        return $this->hasMany('app\Contact');
     }
 
     public function addresses()
     {
-        return $this->hasOne('App\Address');
+        return $this->hasOne('app\Address');
     }
 
     public function events()
     {
-        return $this->hasMany('App\Event');
+        return $this->hasMany('app\Event');
     }
 
     public function eventAttendances()
     {
-        return $this->belongsToMany('App\Event_attendance');
+        return $this->belongsToMany('app\EventAttendance');
     }
 
     public function finances()
     {
-        return $this->hasOne('App\Finance');
+        return $this->hasOne('app\Finance');
     }
 
     public function courses()
     {
-        return $this->belongsToMany('App\Course');
+        return $this->belongsToMany('app\Course');
     }
 
     public function classes()
     {
-        return $this->belongsToMany('App\Class');
+        return $this->belongsToMany('app\Class');
     }
 
     public function news()
     {
-        return $this->hasMany('App\News');
+        return $this->hasMany('app\News');
     }
 
     public function payments()
     {
-        return $this->hasOne('App\Payment');
+        return $this->hasOne('app\Payment');
     }
 
     public function roles()
     {
-        return $this->belongsToMany('App\Role');
+        return $this->belongsToMany('app\Role');
     }
 }

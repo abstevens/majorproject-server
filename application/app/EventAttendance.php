@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace app;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,11 +8,11 @@ class EventAttendance extends Model
 {
     public function users()
     {
-        return $this->belongsToMany('App\User');
+        return $this->belongsToMany('app\User');
     }
 
     public function events()
     {
-        return $this->belongsToMany('App\Event');
+        return $this->belongsToMany('app\Event');
     }
 }
