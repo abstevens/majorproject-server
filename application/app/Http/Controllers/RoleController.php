@@ -94,6 +94,4 @@ class RoleController extends Controller
     {
         //
     }
-
-
 }

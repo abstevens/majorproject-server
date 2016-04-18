@@ -94,6 +94,4 @@ class EventController extends Controller
     {
         //
     }
-
-
 }
