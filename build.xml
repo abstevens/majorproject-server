@@ -21,7 +21,7 @@
 
     <target name="lint:php:syntax" description="Check for syntax errors in PHP files">
         <phplint>
-            <fileset dir="${project.basedir}/app">
+            <fileset dir="${project.basedir}/application">
                 <include name="**/*.php"/>
             </fileset>
         </phplint>
