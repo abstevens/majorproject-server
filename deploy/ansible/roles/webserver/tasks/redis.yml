@@ -1,0 +1,8 @@
+---
+- name: Install Redis
+  yum: name={{ item }} state=present disable_gpg_check=yes
+  with_items:
+    - redis
+
+- name: Boot and start redis
+  service: name=redis enabled=yes state=started

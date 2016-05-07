@@ -1,0 +1,9 @@
+---
+- name: Install nodejs and npm
+  yum: name={{ item }} state=present disable_gpg_check=yes
+  with_items:
+    - nodejs
+    - npm
+
+#- name: Install project's npm packages
+#  npm: path=/var/www/application

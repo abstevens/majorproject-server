@@ -1,0 +1,45 @@
+---
+- name: Install nginx-release-centos-7-0 repo
+  yum:
+    name="http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm"
+    state=present
+
+- name: Install Nginx
+  yum: name={{ item }} state=present disable_gpg_check=yes
+  with_items:
+    - nginx
+
+#- name: Delete default nginx conf files
+#  file: path=/etc/nginx/{{ item }} state=absent
+#  with_items:
+#    - fastcgi.conf
+#    - nginx.conf
+
+#- name: Link nginx conf files
+#  file:
+#    src=/var/www/application/deploy/ansible/roles/webserver/files/nginx/{{ item }}
+#    dest=/etc/nginx/{{ item }}
+#    state=link
+#  with_items:
+#    - fastcgi.conf
+#    - nginx.conf
+
+- name: Render Nginx config templates
+  template:
+    src=roles/webserver/files/nginx/{{ item }}.conf.j2
+    dest=/etc/nginx/{{ item }}.conf
+    owner=nginx group=nginx mode=0644
+  with_items:
+    - fastcgi
+    - nginx
+
+- name: Boot and start nginx
+  service: name=nginx enabled=yes state=started
+
+- name: Configure firewall with ports
+  firewalld: service={{ item }} permanent=true zone=public state=enabled
+  with_items:
+    - http
+    - https
+  notify:
+    - restart firewalld
