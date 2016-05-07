@@ -15,7 +15,7 @@ class EventsTableSeeder extends Seeder
         $users = User::all();
 
         $maxEventOwners = round($users->count() / 5);
-        $randomUserAmount = mt_rand(3 , $maxEventOwners);
+        $randomUserAmount = mt_rand(3, $maxEventOwners);
         $organizers = $users->random($randomUserAmount);
 
         $organizers->each(function ($organizer, $key) {

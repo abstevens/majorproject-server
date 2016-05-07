@@ -14,6 +14,6 @@
 $factory->define(App\Mark::class, function (Faker\Generator $faker) {
     return [
         'assignment' => $faker->word,
-        'percentage' => mt_rand(0,100),
+        'percentage' => mt_rand(0, 100),
     ];
 });
