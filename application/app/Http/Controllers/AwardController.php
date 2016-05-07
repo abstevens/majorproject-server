@@ -1,10 +1,11 @@
 <?php
 
-namespace app\Http\Controllers;
+namespace App\Http\Controllers;
 
-use app\Award;
+use App\Award;
 use Illuminate\Http\Request;
-use app\Http\Requests;
+
+use App\Http\Requests;
 
 class AwardController extends Controller
 {

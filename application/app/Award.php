@@ -1,6 +1,6 @@
 <?php
 
-namespace app;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,6 +8,6 @@ class Award extends Model
 {
     public function courses()
     {
-        return $this->belongsTo('app\Course');
+        return $this->belongsTo('App\Course');
     }
 }

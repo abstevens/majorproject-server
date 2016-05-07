@@ -1,6 +1,6 @@
 <?php
 
-namespace app;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,6 +8,6 @@ class Payment extends Model
 {
     public function users()
     {
-        return $this->belongsTo('app\User');
+        return $this->belongsTo('App\User');
     }
 }

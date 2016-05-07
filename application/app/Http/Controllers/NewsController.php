@@ -1,10 +1,11 @@
 <?php
 
-namespace app\Http\Controllers;
+namespace App\Http\Controllers;
 
-use app\News;
+use App\News;
 use Illuminate\Http\Request;
-use app\Http\Requests;
+
+use App\Http\Requests;
 
 class NewsController extends Controller
 {
@@ -94,4 +95,6 @@ class NewsController extends Controller
     {
         //
     }
+
+
 }
