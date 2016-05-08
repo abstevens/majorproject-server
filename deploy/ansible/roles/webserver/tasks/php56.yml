@@ -1,27 +1,44 @@
 ---
-- name: Installing PHP 5.6 with Extensions
-  yum: name={{ item }} state=present
+- name: Install php56
+  yum: name={{ item }} enablerepo=remi,remi-php56 state=present disable_gpg_check=yes
   with_items:
-      - php56w
-      - php56w-bcmath
-      - php56w-cli
-      - php56w-common
-      - php56w-devel
-      - php56w-fpm
-      - php56w-gd
-      - php56w-intl
-      - php56w-mbstring
-      - php56w-mcrypt
-      - php56w-mysqlnd
-      - php56w-pdo
-      - php56w-pear
-      - php56w-pecl-xdebug
-      - php56w-pecl-redis
-      - php56w-pecl-imagick
-      - php56w-soap
-      - php56w-xml
+    - php56
+    - php56-php-cli
+    - php56-php-common
+    - php56-php-fpm
+    - php56-php-intl
+    - php56-php-mcrypt
+    - php56-php-gd
+    - php56-php-pecl-imagick
+    - php56-php-pecl-redis
+    - php56-php-pecl-selinux
+    - php56-php-bcmath
+    - php56-php-soap
+    - php56-php-pecl-xdebug
+    - php56-php-pecl-crypto
+    - php56-php-mbstring
+    - php56-php-xml
+    - php56-php-pecl-zip
 
+- name: Delete default php conf files
+  file: path=/opt/remi/php56/root/etc/{{ item }} state=absent
+  with_items:
+    - php.d/15-xdebug.ini
+    - php-fpm.d
+    - php.ini
+    - php-fpm.conf
 
-#- name: Start and Enable Services
-#  service: name=php-fpm enabled=yes
-#  service: name=php-fpm state=started
+- name: Link php conf files
+  file: src=/var/www/application/deploy/ansible/roles/webserver/files/php56/{{ item }} dest=/opt/remi/php56/root/etc/{{ item }} state=link
+  with_items:
+    - php.d/15-xdebug.ini
+    - php-fpm.d
+    - php.ini
+    - php-fpm.conf
+
+#- name: Fix permissions for php storage
+#  file: path=/var/opt/remi/php56 owner=nginx group=nginx
+  # try  state=touch and/or recurse=yes
+
+- name: Boot and start php-fpm
+  service: name=php56-php-fpm enabled=yes state=started

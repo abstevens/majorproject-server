@@ -1,3 +1,0 @@
----
-- name: Set selinux to enforced
-  selinux: policy=targeted state=disabled

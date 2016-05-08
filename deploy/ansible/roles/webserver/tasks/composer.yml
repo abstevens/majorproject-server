@@ -1,6 +1,11 @@
 ---
-- name: Install Composer globally
-  shell: "curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/bin --filename=composer"
+- name: Install composer
+  get_url:
+    url=https://getcomposer.org/composer.phar
+    dest=/usr/local/bin/composer
+    mode=0755
 
-- name: Install composer dependencies
-  composer: command=install working_dir=/var/www/application
+- name: Install project's composer dependencies
+  composer:
+    command=install
+    working_dir=/var/www/{{ ansible_nodename }}

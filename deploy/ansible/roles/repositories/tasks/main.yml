@@ -1,7 +1,7 @@
 ---
-- name: Install EPEL and Webtatic Repositories
+- name: Install Epel and Webtatic repositories
   yum: name={{ item }} state=present
   with_items:
-    - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-    - https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
-
+    - "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+#    - "http://rpms.famillecollet.com/enterprise/remi-release-7.rpm"
+    - "https://mirror.webtatic.com/yum/el7/webtatic-release.rpm"

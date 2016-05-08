@@ -40,7 +40,7 @@ http {
         listen       80 default_server;
         listen       [::]:80 default_server;
         server_name  _ {{ ansible_nodename }};
-        root         /var/www/{{ ansible_nodename }}/public;
+        root         /var/www/public;
         index        index.html index.htm index.php;
 
         # Load configuration files for the default server block.

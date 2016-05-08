@@ -1,9 +1,6 @@
 ---
-- name: Install Bower and Grunt globally
-  npm: name={{ item }} global=yes
-  with_items:
-    - bower
-    - grunt-cli
+- name: Install bower
+  npm: name=bower global=yes
 
-#- name: Install bower packages
-#  bower: path=/var/www
+#- name: Install project's bower dependencies
+#  bower: path=/var/www/application
