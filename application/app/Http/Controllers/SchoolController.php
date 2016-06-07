@@ -72,7 +72,8 @@ class SchoolController extends Controller
      */
     public function edit($id)
     {
-        //
+        // Not used
+        // it usually returns an html Form with items data for editing
     }
 
     /**
@@ -84,7 +85,7 @@ class SchoolController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
