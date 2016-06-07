@@ -2,5 +2,7 @@
 - name: Install Composer globally
   shell: "curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/bin --filename=composer"
 
-- name: Install composer dependencies
-  composer: command=install working_dir=/var/www/application
+- name: Install project's composer dependencies
+  composer:
+    command=install
+    working_dir=/var/www/
