@@ -1,9 +1,11 @@
 ---
-- include: httpd.yml
-- include: mysql.yml
-- include: node.yml
-#- include: php56.yml
-- include: php70.yml
-
-- include: composer.yml
+- include: nginx.yml
+- include: mysql_install.yml
+#- include: mysql_setup.yml
+- include: redis.yml
+- include: node_npm.yml
 - include: bower.yml
+- include: grunt.yml
+# - include: php56.yml
+- include: php70.yml
+- include: composer.yml

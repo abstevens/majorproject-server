@@ -2,7 +2,6 @@ general:
   branches:
     ignore:
       - master
-      - "1.0.x-dev"
 
 machine:
   php:
@@ -15,15 +14,9 @@ machine:
     Europe/Amsterdam
 
 dependencies:
-  pre:
-    - gem install sass
   override:
-    - composer install --prefer-source --no-interaction
-    - npm install
-  post:
-    - ./node_modules/.bin/grunt uglify
-    - ./node_modules/.bin/grunt exec:build_css
+    - composer install -d ./application --no-interaction
 
 test:
   override:
-    - ./bin/phing
+    - ./application/vendor/bin/phing

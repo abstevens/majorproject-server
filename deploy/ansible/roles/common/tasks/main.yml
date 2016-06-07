@@ -1,5 +1,5 @@
 ---
-- name: Install common packages
+- name: Install nano, wget, git, ntp, net-tools
   yum: name={{ item }} state=present
   with_items:
     - nano
@@ -8,15 +8,14 @@
     - ntp
     - net-tools
 
-- name: Set system Timezone
+- name: Set timezone
   command: "timedatectl set-timezone Europe/Amsterdam"
 
-- name: Start and Enable NTP
-  service: name=ntpd enabled=yes
-  service: name=ntpd state=started
+- name: Enable and start ntpd
+  service: name=ntpd enabled=yes state=started
 
-- name: Start and Enable Firewalld
-  service: name=firewalld enabled=yes
-  service: name=firewalld state=started
+- name: Enable and start firewalld
+  service: name=firewalld enabled=yes state=started
 
-- include: selinux.yml
+- name: Disable SELinux
+  selinux: state=disabled

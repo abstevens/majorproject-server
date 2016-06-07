@@ -1,0 +1,10 @@
+---
+- name: Install MariaDB with Python Extension
+  yum: name={{ item }} state=present
+  with_items:
+    - mariadb
+    - mariadb-server
+    - MySQL-python
+
+- name: Boot and start MariaDB
+  service: name=mariadb enabled=yes state=started

@@ -1,27 +1,45 @@
 ---
-- name: Installing PHP 7.0 with Extensions
-  yum: name={{ item }} state=present
+- name: Install php70
+  yum:
+    name={{ item }}
+    state=present
+    disable_gpg_check=yes
   with_items:
-      - php70w
-      - php70w-bcmath
-      - php70w-cli
-      - php70w-common
-      - php70w-devel
-      - php70w-fpm
-      - php70w-gd
-      - php70w-intl
-      - php70w-mbstring
-      - php70w-mcrypt
-      - php70w-mysqlnd
-      - php70w-pdo
-      - php70w-pear
-#      - php70w-pecl-xdebug
-#      - php70w-pecl-redis
-      - php70w-pecl-imagick
-      - php70w-soap
-      - php70w-xml
+    - php70w
+    - php70w-cli
+    - php70w-common
+    - php70w-fpm
+    - php70w-gd
+    - php70w-intl
+    - php70w-mbstring
+    - php70w-mcrypt
+    - php70w-mysqlnd
+    - php70w-pdo
+    - php70w-pear
+    - php70w-pecl-imagick
+    - php70w-pecl-xdebug
+    - php70w-tidy
+    - php70w-xml
 
+#- name: Delete default php conf files
+#  file: path=/etc/opt/remi/php70/{{ item }} state=absent
+#  with_items:
+#    - php.d/15-xdebug.ini
+#    - php-fpm.d
+#    - php.ini
+#    - php-fpm.conf
+#
+#- name: Link php conf files
+#  file: src=/var/www/application/deploy/ansible/roles/webserver/files/php56/{{ item }} dest=/opt/remi/php56/root/etc/{{ item }} state=link
+#  with_items:
+#    - php.d/15-xdebug.ini
+#    - php-fpm.d
+#    - php.ini
+#    - php-fpm.conf
 
-#- name: Start and Enable Services
-#  service: name=php-fpm enabled=yes
-#  service: name=php-fpm state=started
+#- name: Fix permissions for php storage
+#  file: path=/var/opt/remi/php70 owner=nginx group=nginx
+#  # try  state=touch and/or recurse=yes
+
+- name: Boot and start php-fpm
+  service: name=php-fpm enabled=yes state=started

@@ -21,7 +21,7 @@ class EventAttendancesTableSeeder extends Seeder
         $events = $events->slice(0, $attendanceAmount);
 
         $events->each(function ($event, $key) use ($users) {
-            $randomUserAmount = mt_rand(3 , $users->count());
+            $randomUserAmount = mt_rand(3, $users->count());
             $eventUsers = $users->random($randomUserAmount);
 
             $eventUsers->each(function ($user, $key) use ($event) {

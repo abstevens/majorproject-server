@@ -1,4 +1,4 @@
-vagrant ansible_ssh_host=10.3.3.31
+vagrant ansible_ssh_host=10.5.5.15
 
 [servers]
 vagrant

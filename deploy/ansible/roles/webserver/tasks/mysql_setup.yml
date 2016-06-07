@@ -1,0 +1,33 @@
+---
+# Ansible mysql_secure_installation playbook
+
+# Note that mysql lowercases all hostnames!
+#- name: "MySQL: delete anonymous user"
+#  action: mysql_user user="" host="{{ ansible_nodename }}" state="absent"
+
+- name: "MySQL: delete anonymous user for localhost"
+  action: mysql_user user="" state="absent"
+
+- name: "MySQL: remove the test database"
+  action: mysql_db db=test state=absent
+
+# 'localhost' needs to be the last item for idempotency, see
+# http://ansible.cc/docs/modules.html#mysql-user
+#- name: "MySQL: set root user password on first run"
+#  mysql_user: login_user=root
+#              login_password=''
+#              name=root
+#              password={{ mysql_root_password }}
+#              priv=*.*:ALL,GRANT
+#              host={{ item }}
+#  with_items:
+#    - "{{ ansible_nodename }}"
+#    - 127.0.0.1
+#    - ::1
+#    - localhost
+
+- name: Remove existing InnoDB log files
+  file: path=/var/lib/mysql/{{ item }} state=absent
+  with_items:
+  - ib_logfile0
+  - ib_logfile1

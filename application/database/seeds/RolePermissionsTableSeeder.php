@@ -17,17 +17,15 @@ class RolePermissionsTableSeeder extends Seeder
         $users =  User::all();
 
         $courses->each(function ($course, $key) use ($users) {
-            $randomUserAmount = mt_rand(10 , $users->count());
+            $randomUserAmount = mt_rand(10, $users->count());
             $courseUsers = $users->random($randomUserAmount);
 
             $courseUsers->each(function ($user, $key) use ($course) {
                 // TODO: Problem, do you have to make a App\CourseUser??
-                DB::table('course_user')->insert(
-                    [
-                        'course_id' => $course->getAttribute('id'),
-                        'user_id' => $user->getAttribute('id'),
-                    ]
-                );
+                DB::table('course_user')->insert([
+                    'course_id' => $course->getAttribute('id'),
+                    'user_id' => $user->getAttribute('id'),
+                ]);
             });
         });
     }

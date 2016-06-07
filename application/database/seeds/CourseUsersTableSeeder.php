@@ -17,7 +17,7 @@ class CourseUsersTableSeeder extends Seeder
         $users =  User::all();
 
         $courses->each(function ($course, $key) use ($users) {
-            $randomUserAmount = mt_rand(10 , $users->count());
+            $randomUserAmount = mt_rand(10, $users->count());
             $courseUsers = $users->random($randomUserAmount);
 
             $courseUsers->each(function ($user, $key) use ($course) {
