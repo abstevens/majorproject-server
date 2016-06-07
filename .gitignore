@@ -3,3 +3,4 @@
 *.iml
 .vagrant
 application/vendor
+application/public/uploads
