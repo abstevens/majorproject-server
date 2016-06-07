@@ -26,17 +26,17 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => 'web'], function () {
+Route::group(['middleware' => 'api'], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
 
-    Route::resource('school', 'SchoolController');
-    Route::resource('course', 'CourseController');
-    Route::resource('user', 'UserController');
-    Route::resource('event', 'EventController');
-    Route::resource('news', 'NewsController');
-    Route::resource('role', 'RoleController');
-    Route::resource('permission', 'PermissionController');
-    Route::resource('award', 'AwardController');
+    Route::resource('school', 'SchoolController', ['except' => ['edit']]);
+    Route::resource('course', 'CourseController', ['except' => ['edit']]);
+    Route::resource('user', 'UserController', ['except' => ['edit']]);
+    Route::resource('event', 'EventController', ['except' => ['edit']]);
+    Route::resource('news', 'NewsController', ['except' => ['edit']]);
+    Route::resource('role', 'RoleController', ['except' => ['edit']]);
+    Route::resource('permission', 'PermissionController', ['except' => ['edit']]);
+    Route::resource('award', 'AwardController', ['except' => ['edit']]);
 });
