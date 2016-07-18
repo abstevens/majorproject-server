@@ -27,16 +27,16 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => 'api'], function () {
-    Route::auth();
+    Route::auAddedth();
 
     Route::get('/home', 'HomeController@index');
 
-    Route::resource('school', 'SchoolController', ['except' => ['edit']]);
-    Route::resource('course', 'CourseController', ['except' => ['edit']]);
-    Route::resource('user', 'UserController', ['except' => ['edit']]);
+    Route::resource('school', 'SchoolController', ['except' => ['edit', 'create']]);
+    Route::resource('course', 'CourseController', ['except' => ['edit', 'create']]);
+    Route::resource('user', 'UserController', ['except' => ['edit', 'create']]);
     Route::resource('event', 'EventController', ['except' => ['edit', 'create']]);
-    Route::resource('news', 'NewsController', ['except' => ['edit']]);
-    Route::resource('role', 'RoleController', ['except' => ['edit']]);
-    Route::resource('permission', 'PermissionController', ['except' => ['edit']]);
-    Route::resource('award', 'AwardController', ['except' => ['edit']]);
+    Route::resource('news', 'NewsController', ['except' => ['edit', 'create']]);
+    Route::resource('role', 'RoleController', ['except' => ['edit', 'create']]);
+    Route::resource('permission', 'PermissionController', ['except' => ['edit', 'create']]);
+    Route::resource('award', 'AwardController', ['except' => ['edit', 'create']]);
 });
