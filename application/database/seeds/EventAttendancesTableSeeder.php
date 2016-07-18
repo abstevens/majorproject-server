@@ -26,8 +26,8 @@ class EventAttendancesTableSeeder extends Seeder
 
             $eventUsers->each(function ($user, $key) use ($event) {
                 factory(App\EventAttendance::class)->create([
-                        'user' => $user->getAttribute('id'),
-                        'event' => $event->getAttribute('id'),
+                        'user_id' => $user->getAttribute('id'),
+                        'event_id' => $event->getAttribute('id'),
                 ]);
             });
         });
