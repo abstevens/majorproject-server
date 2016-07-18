@@ -10,4 +10,51 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * @param $result
+     * @param $errorTranslation
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondCondition($result, $errorTranslation)
+    {
+        if ($result) {
+            $output = $this->respondData();
+        } else {
+            $output = $this->respondError(trans($errorTranslation));
+        }
+
+        return $output;
+    }
+
+    /**
+     * @param null $data
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondData($data = null)
+    {
+        return $this->respondJson(1, ['data' => $data]);
+    }
+
+    /**
+     * @param $message
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondError($message)
+    {
+        return $this->respondJson(0, ['error' => $message]);
+    }
+
+    /**
+     * Creates a JSON Response
+     *
+     * @param $status
+     * @param array $data
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondJson($status, array $data)
+    {
+        $data['status'] = $status;
+        return response()->json($data);
+    }
 }

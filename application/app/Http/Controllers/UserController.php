@@ -20,7 +20,7 @@ class UserController extends Controller
         $users = User::all();
 
         // Return a JSON data
-        return response()->json($users);
+        return $this->respondData($users);
     }
 
     /**
@@ -41,7 +41,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // TODO: Validate the request
+
+        // Create user model instance
+        $user = new User();
+
+        // Set attributes
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = $request->password;
+
+        // Call the save method
+        return $this->respondStatus($user->save());
     }
 
     /**
@@ -54,23 +65,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        // Get Data from the model (all school DB entries)
-        //$school = School::with('users')->find($id);
+        // Store an event record
         $user = User::find($id);
 
         // Return a JSON data
-        return response()->json($user);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->respondData($user);
     }
 
     /**
@@ -82,7 +81,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Retrieve user model instance
+        $userLoggedIn = User::find($id);
+
+        $userProfile = Auth::user();
+        if ($userProfile->id !== $userLoggedIn->id) return $this->respondError('Only the profile of this user is allowed to make changes'); // json['error' => error_msg, 'status' => StatusCode::FAILED]
+
+        // Set attributes
+        $userLoggedIn->username = $request->username;
+        $userLoggedIn->email = $request->email;
+        $userLoggedIn->password = $request->password;
+
+        // Call the save method
+        return $this->respondStatus($userLoggedIn->save());
     }
 
     /**
@@ -93,6 +104,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
     }
 }
