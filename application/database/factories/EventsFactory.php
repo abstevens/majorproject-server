@@ -1,6 +1,8 @@
 <?php
 
-$factory->define(App\Event::class, function (Faker\Generator $faker, $attributes) {
+use \App\Event;
+
+$factory->define(Event::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->sentence,
         'description' => $faker->paragraph,

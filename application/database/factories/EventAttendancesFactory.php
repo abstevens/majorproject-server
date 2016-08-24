@@ -1,6 +1,8 @@
 <?php
 
-$factory->define(App\EventAttendance::class, function (Faker\Generator $faker, $attributes) {
+use \App\EventAttendance;
+
+$factory->define(EventAttendance::class, function (Faker\Generator $faker) {
     return [
         'status' => $faker->boolean(),
     ];
