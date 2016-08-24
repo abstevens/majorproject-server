@@ -17,7 +17,8 @@ class EventController extends Controller
     public function index()
     {
         // Store all events with attendances
-        $events = Event::with('attendances')->get();
+//        $events = Event::with('attendances')->get();
+        $events = Event::all();
 
         // Return a JSON data
         return $this->respondData($events);
