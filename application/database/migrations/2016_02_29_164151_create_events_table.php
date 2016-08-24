@@ -19,8 +19,8 @@ class CreateEventsTable extends Migration
             $table->string('description');
             $table->dateTime('date_time');
             $table->string('location');
-            $table->float('price')->nullable()->default('NULL');
-            $table->integer('limit_reservations')->nullable()->default('NULL');
+            $table->float('price')->nullable();
+            $table->integer('limit_reservations')->nullable();
 
             $table->foreign('organizer_id')->references('id')->on('users');
 
