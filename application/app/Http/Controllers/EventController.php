@@ -16,21 +16,11 @@ class EventController extends Controller
      */
     public function index()
     {
-        // Get Data from the model (all school DB entries)
-        $events = Event::all();
+        // Store all events with attendances
+        $events = Event::with('attendances')->get();
 
         // Return a JSON data
-        return response()->json($events);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $this->respondData($events);
     }
 
     /**
@@ -41,7 +31,27 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // TODO: Validate the request
+        // Have a look if Laravel's validation can be of any use
+        // https://laravel.com/docs/5.2/validation#quick-writing-the-validation-logic
+
+        // Create event model instance
+        $event = new Event();
+
+        // Set attributes
+        $event->organizer_id = $request->organizer_id;
+        $event->title = $request->title;
+        $event->description = $request->description;
+        $event->date_time = $request->date_time;
+        $event->location = $request->location;
+        $event->price = $request->price;
+        $event->limit_reservations = $request->limit_reservations;
+
+        // Call and store save method
+        $result = $event->save();
+
+        // Return JSON response if save succeeded or not
+        return $this->respondCondition($result, 'event.store_failed');
     }
 
     /**
@@ -54,27 +64,15 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        // Get Data from the model (all school DB entries)
-        //$school = School::with('users')->find($id);
+        // Store an event record
         $event = Event::find($id);
 
         // Return a JSON data
-        return response()->json($event);
+        return $this->respondData($event);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Update the specified resource in the DB.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
@@ -82,10 +80,32 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Retrieve event model instance
+        $event = Event::find($id);
+
+//        TODO: Use Auth!
+//        $user = Auth::user();
+//        if ($user->id !== $event->organizer_id) return $this->respondError('Only the organizer of this event is allowed to make changes'); // json['error' => error_msg, 'status' => StatusCode::FAILED]
+
+        // Set attributes
+//        $event->organizer_id = $request->organizer_id;
+        $event->title = $request->title;
+        $event->description = $request->description;
+        $event->date_time = $request->date_time;
+        $event->location = $request->location;
+        $event->price = $request->price;
+        $event->limit_reservations = $request->limit_reservations;
+
+        // Call and store save method
+        $result = $event->save();
+
+        // Return JSON response if save succeeded or not
+        return $this->respondCondition($result, 'event.update_failed');
     }
 
     /**
+     * TODO: Configure a Cron task to delete old entries
+     *
      * Remove the specified resource from storage.
      *
      * @param  int $id
@@ -93,6 +113,13 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Retrieve event model instance
+        $event = Event::find($id);
+
+        // Call and store delete method
+        $result = $event->delete();
+
+        // Return JSON response if save succeeded or not
+        return $this->respondCondition($result, 'event.destroy_failed');
     }
 }
