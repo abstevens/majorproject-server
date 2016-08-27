@@ -19,7 +19,7 @@ class EventsTableSeeder extends Seeder
         $organizers = $users->random($randomUserAmount);
 
         $organizers->each(function ($organizer, $key) {
-            /** @var \App\User $organizer */
+            /** @var \App\Event $organizer */
             factory(App\Event::class, mt_rand(1, 5))->create([
                 'organizer_id' => $organizer->getAttribute('id'),
             ]);
