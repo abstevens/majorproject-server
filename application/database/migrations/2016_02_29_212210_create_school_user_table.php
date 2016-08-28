@@ -23,6 +23,8 @@ class CreateSchoolUserTable extends Migration
 
             $table->timestamps();
             $table->softDeletes();
+
+            $table->unique(['school_id', 'user_id']);
         });
     }
 

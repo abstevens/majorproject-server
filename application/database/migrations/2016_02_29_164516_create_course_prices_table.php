@@ -16,7 +16,7 @@ class CreateCoursePricesTable extends Migration
             $table->increments('id');
             $table->integer('course_id')->unsigned();
             $table->float('price');
-            $table->tinyInteger('installments');
+            $table->integer('installments');
 
 
             $table->foreign('course_id')->references('id')->on('courses');
