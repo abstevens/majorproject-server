@@ -111,8 +111,11 @@ class UserController extends Controller
         return $this->respondCondition($result, 'user.destroy_failed');
     }
 
-    public function search()
+    public function search($criteria, $searchString)
     {
-
+        // $criteria = Last Name First Name
+        if ($criteria == 'name') {
+            return User::where('name', 'LIKE', "%{$searchString}%")->get();
+        }
     }
 }
