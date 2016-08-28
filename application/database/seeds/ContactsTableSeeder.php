@@ -23,7 +23,7 @@ class ContactsTableSeeder extends Seeder
 
         $users->each(function ($user) use ($type) {
             $typeKey = array_rand($type);
-            factory(Contact::class, mt_rand(1, 3))->create([
+            factory(Contact::class, "contact {$type[$typeKey]}", mt_rand(1, 3))->create([
                 'user_id' => $user,
                 'type' => $type[$typeKey],
             ]);

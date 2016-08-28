@@ -2,8 +2,14 @@
 
 use \App\Contact;
 
-$factory->define(Contact::class, function (Faker\Generator $faker) {
+$factory->defineAs(Contact::class, 'contact phone', function (Faker\Generator $faker) {
     return [
         'value' => $faker->phoneNumber,
+    ];
+});
+
+$factory->defineAs(Contact::class, 'contact email', function (Faker\Generator $faker) {
+    return [
+        'value' => $faker->email,
     ];
 });
