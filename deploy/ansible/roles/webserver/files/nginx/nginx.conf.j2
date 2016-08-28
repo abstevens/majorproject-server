@@ -38,7 +38,17 @@ http {
 
     server {
         listen       80 default_server;
-        listen       [::]:80 default_server;
+        #server_name  _ {{ ansible_nodename }};
+        #rewrite ^ https://$http_host$request_uri? permanent;    # force redirect http to https
+    #}
+
+    #server {
+        #listen       443;
+
+        #ssl on;
+        #ssl_certificate /etc/nginx/certs/cacert.pem;        # path to your cacert.pem
+        #ssl_certificate_key /etc/nginx/certs/privkey.pem;    # path to your privkey.pem
+
         server_name  _ {{ ansible_nodename }};
         root         /var/www/public;
         index        index.html index.htm index.php;
@@ -52,6 +62,8 @@ http {
 
         location ~ \.php$ {
             include fastcgi.conf;
+            fastcgi_param   HTTPS           on;
+            fastcgi_param   HTTP_SCHEME     https;
         }
 
         error_page 404 /404.html;
