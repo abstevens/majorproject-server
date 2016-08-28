@@ -30,7 +30,7 @@ class AwardController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
