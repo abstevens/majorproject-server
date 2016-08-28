@@ -4,7 +4,11 @@
 Vagrant.configure(2) do |config|
     config.vm.box = "centos/7"
 
-    config.vm.network "public_network", bridge: "en0: Wi-Fi (AirPort)"
+    config.vm.network "public_network", bridge: [
+      "en1: Wi-Fi (AirPort)",
+      "en0: Wi-Fi (AirPort)",
+    ]
+
     config.vm.network "private_network", ip: "10.5.5.15"
     config.vm.network "forwarded_port", guest: 22, host: 2215, auto_correct: true
 
