@@ -1,6 +1,8 @@
 <?php
 
-$factory->define(App\Address::class, function (Faker\Generator $faker) {
+use \App\Address;
+
+$factory->define(Address::class, function (Faker\Generator $faker) {
     return [
         'street' => $faker->streetAddress,
         'city' => $faker->city,
