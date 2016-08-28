@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use \App\Course;
+use \App\SchoolClass;
 
 class SchoolClassesTableSeeder extends Seeder
 {
@@ -11,8 +13,18 @@ class SchoolClassesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\SchoolClass::class, 10)->create(
-            //TODO: add course_id
-        );
+        echo "Seeding: SchoolClassesTableSeeder... ";
+
+        $courses =  Course::pluck('id');
+
+        $courses->each(function ($course) {
+            $classesCount = mt_rand(1,6);
+
+            for ($i = 0; $i <= $classesCount; $i++) {
+                factory(SchoolClass::class)->create([
+                    'course_id' => $course,
+                ]);
+            }
+        });
     }
 }

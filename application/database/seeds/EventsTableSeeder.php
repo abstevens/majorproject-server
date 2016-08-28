@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use \App\User;
+use \App\Event;
 
 class EventsTableSeeder extends Seeder
 {
@@ -12,16 +13,18 @@ class EventsTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::all();
+        echo "Seeding: EventsTableSeeder... ";
+
+        $users = User::pluck('id');
 
         $maxEventOwners = round($users->count() / 5);
         $randomUserAmount = mt_rand(3, $maxEventOwners);
         $organizers = $users->random($randomUserAmount);
 
-        $organizers->each(function ($organizer, $key) {
+        $organizers->each(function ($organizer) {
             /** @var \App\Event $organizer */
-            factory(App\Event::class, mt_rand(1, 5))->create([
-                'organizer_id' => $organizer->getAttribute('id'),
+            factory(Event::class, mt_rand(1, 5))->create([
+                'organizer_id' => $organizer,
             ]);
         });
     }

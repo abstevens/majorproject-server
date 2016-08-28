@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use \App\School;
 use \App\User;
+use \App\SchoolUser;
 
 class SchoolUsersTableSeeder extends Seeder
 {
@@ -13,14 +14,24 @@ class SchoolUsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::all();
-        $schools = School::all();
+        echo "Seeding: SchoolUsersTableSeeder... ";
 
-        $schools->each(function ($school, $key) use ($users) {
-            factory(App\SchoolUser::class, 100)->create([
-                'school_id' => $school->getAttribute('id'),
-                'user_id' => $users->random()->getAttribute('id'),
-            ]);
+        /** @var $users \Illuminate\Database\Eloquent\Collection */
+        $users = User::pluck('id')->toArray();
+        $schools = School::pluck('id');
+
+        $schools->each(function ($school) use ($users) {
+            $tempUsers = $users;
+            for ($i = 0; $i < 30; $i++) {
+                $user = array_rand($tempUsers, 1);
+
+                factory(SchoolUser::class, 1)->create([
+                    'school_id' => $school,
+                    'user_id' => $tempUsers[$user],
+                ]);
+
+                unset($tempUsers[$user]);
+            }
         });
     }
 }

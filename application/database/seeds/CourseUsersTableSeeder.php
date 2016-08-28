@@ -13,19 +13,20 @@ class CourseUsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $courses =  Course::all();
-        $users =  User::all();
+        echo "Seeding: CourseUsersTableSeeder... ";
 
-        $courses->each(function ($course, $key) use ($users) {
+        $courses =  Course::pluck('id');
+        $users =  User::pluck('id');
+
+        $courses->each(function ($course) use ($users) {
             $randomUserAmount = mt_rand(10, $users->count());
             $courseUsers = $users->random($randomUserAmount);
 
-            $courseUsers->each(function ($user, $key) use ($course) {
-                // TODO: Problem, do you have to make a App\CourseUser -- no class no problem =)
+            $courseUsers->each(function ($user) use ($course) {
                 DB::table('course_user')->insert(
                     [
-                        'course_id' => $course->getAttribute('id'),
-                        'user_id' => $user->getAttribute('id'),
+                        'course_id' => $course,
+                        'user_id' => $user,
                     ]
                 );
             });

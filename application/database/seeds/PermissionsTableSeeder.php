@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use \App\Permission;
 
 class PermissionsTableSeeder extends Seeder
 {
@@ -11,6 +12,8 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Permission::class, 20)->create();
+        echo "Seeding: PermissionsTableSeeder... ";
+
+        factory(Permission::class, 20)->create();
     }
 }

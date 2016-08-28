@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use \App\User;
+use \App\Mark;
 
 class MarksTableSeeder extends Seeder
 {
@@ -12,11 +13,13 @@ class MarksTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::all();
+        echo "Seeding: MarksTableSeeder... ";
 
-        $users->each(function ($user, $key) {
-            factory(App\Mark::class, mt_rand(1, 3))->create([
-                'user_id' => $user->getAttribute('id'),
+        $users = User::pluck('id');
+
+        $users->each(function ($user) {
+            factory(Mark::class, mt_rand(5, 20))->create([
+                'user_id' => $user,
             ]);
         });
     }

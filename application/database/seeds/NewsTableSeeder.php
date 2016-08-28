@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use \App\User;
+use \App\News;
 
 class NewsTableSeeder extends Seeder
 {
@@ -12,11 +13,13 @@ class NewsTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::all();
+        echo "Seeding: NewsTableSeeder... ";
 
-        $users->each(function ($user, $key) {
-            factory(App\News::class, mt_rand(1, 10))->create([
-                'user_id' => $user->getAttribute('id'),
+        $users = User::pluck('id');
+
+        $users->each(function ($user) {
+            factory(News::class, mt_rand(1, 10))->create([
+                'user_id' => $user,
             ]);
         });
     }
