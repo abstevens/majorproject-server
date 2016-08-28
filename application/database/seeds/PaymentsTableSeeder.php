@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use \App\User;
+use \App\Payment;
 
 class PaymentsTableSeeder extends Seeder
 {
@@ -12,11 +13,13 @@ class PaymentsTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::all();
+        echo "Seeding: PaymentsTableSeeder... ";
 
-        $users->each(function ($user, $key) {
-            factory(App\Payment::class, mt_rand(1, 3))->create([
-                'user_id' => $user->getAttribute('id'),
+        $users = User::pluck('id');
+
+        $users->each(function ($user) {
+            factory(Payment::class, mt_rand(1, 3))->create([
+                'user_id' => $user,
             ]);
         });
     }

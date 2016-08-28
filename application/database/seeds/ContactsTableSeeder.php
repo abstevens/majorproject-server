@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use \App\User;
+use \App\Contact;
 
 class ContactsTableSeeder extends Seeder
 {
@@ -12,16 +13,19 @@ class ContactsTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::all();
+        echo "Seeding: ContactsTableSeeder... ";
+
+        $users = User::pluck('id');
         $type = [
-            'Phone',
-            'Email',
+            'phone',
+            'email',
         ];
 
-        $users->each(function ($user, $key) use ($type) {
-            factory(App\Contact::class, mt_rand(1, 3))->create([
-                'user_id' => $user->getAttribute('id'),
-                'type' => array_rand($type),
+        $users->each(function ($user) use ($type) {
+            $typeKey = array_rand($type);
+            factory(Contact::class, mt_rand(1, 3))->create([
+                'user_id' => $user,
+                'type' => $type[$typeKey],
             ]);
         });
     }

@@ -30,13 +30,53 @@ Route::group(['middleware' => 'api'], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
+    Route::get('user/search/*criteria*/*name_goes_here*', 'UserController@search');
 
-    Route::resource('school', 'SchoolController', ['except' => ['edit']]);
-    Route::resource('course', 'CourseController', ['except' => ['edit']]);
-    Route::resource('user', 'UserController', ['except' => ['edit']]);
-    Route::resource('event', 'EventController', ['except' => ['edit']]);
-    Route::resource('news', 'NewsController', ['except' => ['edit']]);
-    Route::resource('role', 'RoleController', ['except' => ['edit']]);
-    Route::resource('permission', 'PermissionController', ['except' => ['edit']]);
-    Route::resource('award', 'AwardController', ['except' => ['edit']]);
+    Route::model('address', 'App\Address');
+    Route::resource('address', 'AddressController', ['except' => ['edit', 'create']]);
+
+    Route::model('award', 'App\Award');
+    Route::resource('award', 'AwardController', ['except' => ['edit', 'create']]);
+
+    Route::model('contact', 'App\Contact');
+    Route::resource('contact', 'ContactController', ['except' => ['edit', 'create']]);
+
+    Route::model('course', 'App\Course');
+    Route::resource('course', 'CourseController', ['except' => ['edit', 'create']]);
+
+    Route::model('course_price', 'App\CoursePrice');
+    Route::resource('course_price', 'CoursePriceController', ['except' => ['edit', 'create']]);
+
+    Route::model('detail', 'App\Detail');
+    Route::resource('detail', 'DetailController', ['except' => ['edit', 'create']]);
+
+    Route::model('event', 'App\Event');
+    Route::resource('event', 'EventController', ['except' => ['edit', 'create']]);
+
+    Route::model('event_attendance', 'App\EventAttendance');
+    Route::resource('event_attendance', 'EventAttendanceController', ['except' => ['edit', 'create']]);
+
+    Route::model('mark', 'App\Mark');
+    Route::resource('mark', 'MarkController', ['except' => ['edit', 'create']]);
+
+    Route::model('news', 'App\News');
+    Route::resource('news', 'NewsController', ['except' => ['edit', 'create']]);
+
+    Route::model('payment', 'App\Payment');
+    Route::resource('payment', 'PaymentController', ['except' => ['edit', 'create']]);
+
+    Route::model('permission', 'App\Permission');
+    Route::resource('permission', 'PermissionController', ['except' => ['edit', 'create']]);
+
+    Route::model('role', 'App\User');
+    Route::resource('role', 'RoleController', ['except' => ['edit', 'create']]);
+
+    Route::model('school', 'App\School');
+    Route::resource('school', 'SchoolController', ['except' => ['edit', 'create']]);
+
+    Route::model('school_class', 'App\Class');
+    Route::resource('school_class', 'SchoolClassController', ['except' => ['edit', 'create']]);
+
+    Route::model('user', 'App\User');
+    Route::resource('user', 'UserController', ['except' => ['edit', 'create']]);
 });

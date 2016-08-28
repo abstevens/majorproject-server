@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use \App\Course;
+use \App\CoursePrice;
 
 class CoursePricesSeeder extends Seeder
 {
@@ -12,16 +13,17 @@ class CoursePricesSeeder extends Seeder
      */
     public function run()
     {
-        // TODO: Problem with installment output
-        $courses =  Course::all();
+        echo "Seeding: CoursePricesTableSeeder... ";
+
+        $courses =  Course::pluck('id');
         $installments = ['200', '400', '800'];
 
-        $courses->each(function ($course, $key) use ($installments) {
+        $courses->each(function ($course) use ($installments) {
             $installmentKey = array_rand($installments);
             $installment = $installments[$installmentKey];
 
-            factory(App\CoursePrice::class)->create([
-                'course_id' => $course->getAttribute('id'),
+            factory(CoursePrice::class)->create([
+                'course_id' => $course,
                 'installments' => $installment,
             ]);
         });

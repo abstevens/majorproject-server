@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use \App\User;
+use \App\Address;
 
 class AddressesTableSeeder extends Seeder
 {
@@ -12,11 +13,13 @@ class AddressesTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::all();
+        echo "Seeding: AddressesTableSeeder... ";
 
-        $users->each(function ($user, $key) {
-            factory(App\Address::class, mt_rand(1, 3))->create([
-                'user_id' => $user->getAttribute('id'),
+        $users = User::pluck('id');
+
+        $users->each(function ($user) {
+            factory(Address::class, mt_rand(1, 3))->create([
+                'user_id' => $user,
             ]);
         });
     }

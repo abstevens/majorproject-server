@@ -13,11 +13,12 @@ class RoleUsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::all();
-        $roles = Role::all();
+        echo "Seeding: RoleUsersTableSeeder... ";
+
+        $users = User::pluck('id');
+        $roles = Role::pluck('id');
 
         $users->each(function ($user, $key) use ($roles) {
-
             $randomRoles = $roles->random(3)->all();
             $randomRolesKeys = array_keys($randomRoles);
             $chance = mt_rand(0, 9);
@@ -35,8 +36,8 @@ class RoleUsersTableSeeder extends Seeder
 
                 DB::table('role_user')->insert(
                     [
-                        'user_id' => $user->getAttribute('id'),
-                        'role_id' => $randomRoles[$roleIndex]->getAttribute('id'),
+                        'user_id' => $user,
+                        'role_id' => $randomRoles[$roleIndex],
                     ]
                 );
             }

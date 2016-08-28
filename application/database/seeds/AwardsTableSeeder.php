@@ -13,11 +13,13 @@ class AwardsTableSeeder extends Seeder
      */
     public function run()
     {
-        $courses =  Course::all();
+        echo "Seeding: AwardsTableSeeder... ";
 
-        $courses->each(function ($course, $key) {
+        $courses =  Course::pluck('id');
+
+        $courses->each(function ($course) {
             factory(Award::class)->create([
-                'course_id' => $course->getAttribute('id'),
+                'course_id' => $course,
             ]);
         });
     }

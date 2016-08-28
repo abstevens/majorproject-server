@@ -12,25 +12,16 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        // Get Data from the model (all school DB entries)
-        $users = User::all();
+        // Store all users data in $users
+        $users = $user::all();
 
-        // Return a JSON data
-        return response()->json($users);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        // Return users data
+        return $this->respondData($users);
     }
 
     /**
@@ -41,7 +32,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|unique:name|max:255',
+            'email' => 'required|email|unique:email|max:255',
+            'password' => 'required|string|max:60',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('user/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create user model instance with request
+            $user = new User($request->all());
+
+            // Save the user request
+            $result = $user->save();
+
+            return $this->respondCondition($result, 'user.store_failed');
+        }
     }
 
     /**
@@ -49,28 +58,12 @@ class UserController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param  int $id
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        // Get Data from the model (all school DB entries)
-        //$school = School::with('users')->find($id);
-        $user = User::find($id);
-
-        // Return a JSON data
-        return response()->json($user);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->respondData($user);
     }
 
     /**
@@ -82,17 +75,44 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Need to fix this.
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|unique:name|max:255',
+            'email' => 'required|email|unique:email|max:255',
+            'password' => 'required|string|max:60',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('user/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create user model instance with request
+            $user = new User($request->all());
+
+            // Save the user request
+            $result = $user->save();
+
+            return $this->respondCondition($result, 'user.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $result = $user->delete();
+
+        return $this->respondCondition($result, 'user.destroy_failed');
+    }
+
+    public function search()
+    {
+
     }
 }
