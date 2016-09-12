@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use \App\Course;
 use \App\User;
+use \App\CourseUser;
 
 class CourseUsersTableSeeder extends Seeder
 {
@@ -23,12 +24,10 @@ class CourseUsersTableSeeder extends Seeder
             $courseUsers = $users->random($randomUserAmount);
 
             $courseUsers->each(function ($user) use ($course) {
-                DB::table('course_user')->insert(
-                    [
-                        'course_id' => $course,
-                        'user_id' => $user,
-                    ]
-                );
+                factory(CourseUser::class)->create([
+                    'course_id' => $course,
+                    'user_id' => $user,
+                ]);
             });
         });
     }
