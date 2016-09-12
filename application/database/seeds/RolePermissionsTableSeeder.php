@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use \App\Role;
 use \App\Permission;
+use \App\RolePermission;
 
 class RolePermissionsTableSeeder extends Seeder
 {
@@ -18,12 +19,16 @@ class RolePermissionsTableSeeder extends Seeder
         $roles =  Role::pluck('id');
         $permissions =  Permission::pluck('id');
 
-        $roles->each(function ($role, $key) use ($permissions) {
+        $roles->each(function ($role) use ($permissions) {
             $randomPermissionsAmount = mt_rand(3, $permissions->count());
             $rolePermissions = $permissions->random($randomPermissionsAmount);
 
-            $rolePermissions->each(function ($permission, $key) use ($role) {
-                DB::table('role_permission')->insert([
+            $rolePermissions->each(function ($permission) use ($role) {
+//                DB::table('role_permission')->insert([
+//                    'role_id' => $role,
+//                    'permission_id' => $permission,
+//                ]);
+                factory(RolePermission::class)->create([
                     'role_id' => $role,
                     'permission_id' => $permission,
                 ]);

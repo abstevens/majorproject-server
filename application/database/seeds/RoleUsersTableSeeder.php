@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use \App\User;
 use \App\Role;
+use \App\RoleUser;
 
 class RoleUsersTableSeeder extends Seeder
 {
@@ -34,12 +35,16 @@ class RoleUsersTableSeeder extends Seeder
             for ($i = 0; $i < $insertCount; $i++) {
                 $roleIndex = $randomRolesKeys[$i];
 
-                DB::table('role_user')->insert(
-                    [
-                        'user_id' => $user,
-                        'role_id' => $randomRoles[$roleIndex],
-                    ]
-                );
+//                DB::table('role_user')->insert(
+//                    [
+//                        'user_id' => $user,
+//                        'role_id' => $randomRoles[$roleIndex],
+//                    ]
+//                );
+                factory(RoleUser::class)->create([
+                    'user_id' => $user,
+                    'role_id' => $randomRoles[$roleIndex],
+                ]);
             }
         });
     }

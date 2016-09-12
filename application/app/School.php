@@ -41,4 +41,9 @@ class School extends Model
     {
         return $this->belongsToMany('App\User');
     }
+
+    public function courses()
+    {
+        return $this->hasMany('App\Course');
+    }
 }

@@ -14,6 +14,6 @@ class CoursesTableSeeder extends Seeder
     {
         echo "Seeding: CoursesTableSeeder... ";
 
-        factory(Course::class, 5)->create();
+        factory(Course::class, 25)->create();
     }
 }

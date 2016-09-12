@@ -12,25 +12,26 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(UsersTableSeeder::class);
-        $this->call(SchoolsTableSeeder::class);
-        $this->call(SchoolUsersTableSeeder::class);
-        $this->call(EventsTableSeeder::class);
-        $this->call(EventAttendancesTableSeeder::class);
+        $this->call(UserAddressesTableSeeder::class);
+        $this->call(UserContactsTableSeeder::class);
+        $this->call(UserDetailsTableSeeder::class);
+        $this->call(UserMarksTableSeeder::class);
+        $this->call(PaymentsTableSeeder::class);
+        $this->call(NewsTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(RoleUsersTableSeeder::class);
         $this->call(PermissionsTableSeeder::class);
         $this->call(RolePermissionsTableSeeder::class);
+        $this->call(EventsTableSeeder::class);
+        $this->call(EventAttendancesTableSeeder::class);
+        $this->call(SchoolsTableSeeder::class);
+        $this->call(SchoolUsersTableSeeder::class);
         $this->call(CoursesTableSeeder::class);
-        $this->call(CourseUsersTableSeeder::class); // TODO: Need to fix. Have to make CourseSchool table!
-        $this->call(CoursePricesSeeder::class);
-        $this->call(AwardsTableSeeder::class);
-        $this->call(SchoolClassesTableSeeder::class);
-        $this->call(ClassUsersTableSeeder::class);
-        $this->call(AddressesTableSeeder::class);
-        $this->call(ContactsTableSeeder::class);
-        $this->call(DetailsTableSeeder::class);
-        $this->call(MarksTableSeeder::class);
-        $this->call(NewsTableSeeder::class);
-        $this->call(PaymentsTableSeeder::class);
+        $this->call(SchoolCoursesTableSeeder::class);
+        $this->call(CourseUsersTableSeeder::class);
+        $this->call(CoursePricesTableSeeder::class);
+        $this->call(CourseAwardsTableSeeder::class);
+        $this->call(CourseClassesTableSeeder::class);
+        $this->call(CourseClassAttendancesTableSeeder::class);
     }
 }

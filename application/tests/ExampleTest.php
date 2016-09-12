@@ -6,6 +6,10 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ExampleTest extends TestCase
 {
+
+    // Reverts all the changes to the DB automatically after the test finishes
+    use DatabaseTransactions;
+
     /**
      * A basic functional test example.
      *
@@ -14,6 +18,6 @@ class ExampleTest extends TestCase
     public function testBasicExample()
     {
         $this->visit('/')
-             ->see('Laravel 5');
+             ->see('Welcome');
     }
 }
