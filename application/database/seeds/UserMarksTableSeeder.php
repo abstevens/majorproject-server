@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use \App\User;
-use \App\Address;
+use \App\UserMark;
 
-class AddressesTableSeeder extends Seeder
+class UserMarksTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,12 +13,12 @@ class AddressesTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: AddressesTableSeeder... ";
+        echo "Seeding: UserMarksTableSeeder... ";
 
         $users = User::pluck('id');
 
         $users->each(function ($user) {
-            factory(Address::class, mt_rand(1, 3))->create([
+            factory(UserMark::class, mt_rand(5, 20))->create([
                 'user_id' => $user,
             ]);
         });
