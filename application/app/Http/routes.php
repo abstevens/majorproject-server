@@ -30,10 +30,9 @@ Route::group(['middleware' => 'api'], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
-    Route::get('user/search/*criteria*/*name_goes_here*', 'UserController@search');
 
-    Route::model('address', 'App\Address');
-    Route::resource('address', 'AddressController', ['except' => ['edit', 'create']]);
+    Route::model('address', 'App\UserAddress');
+    Route::resource('address', 'UserAddressController', ['except' => ['edit', 'create']]);
 
     Route::model('award', 'App\Award');
     Route::resource('award', 'AwardController', ['except' => ['edit', 'create']]);
@@ -78,5 +77,9 @@ Route::group(['middleware' => 'api'], function () {
     Route::resource('school_class', 'SchoolClassController', ['except' => ['edit', 'create']]);
 
     Route::model('user', 'App\User');
+    Route::get('user/search', 'UserController@search');
+    Route::get('user/search/{criteria?}/{search_string}', function ($criteria, $searchString) {
+        // TODO:?
+    });
     Route::resource('user', 'UserController', ['except' => ['edit', 'create']]);
 });
