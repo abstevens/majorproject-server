@@ -10,23 +10,23 @@ namespace App\Http\Controllers;
 
 use App\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\Validator;
 
 class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param Address $address
+     * @param Payment $payment
      * @return \Illuminate\Http\Response
      */
-    public function index(Address $address)
+    public function index(Payment $payment)
     {
-        return $address::all();
-        // Get Data from the model (all school DB entries)
-        //$users = User::all();
+        // Store all payments data
+        $payments = $payment::all();
 
-        // Return a JSON data
-        //return response()->json($users);
+        // Return payments data
+        return $this->respondData($payments);
     }
 
     /**
@@ -37,19 +37,27 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+        // Set validation rules
         $validator = Validator::make($request->all(), [
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
+            'user_id' => 'required|integer',
+            'amount' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
         ]);
 
+        // Validate payments request
         if ($validator->fails()) {
-            return redirect('post/create')
+            return redirect('payment/')
                 ->withErrors($validator)
                 ->withInput();
-        }
+        } else {
+            // Create payment model instance with request
+            $payment = new Payment($request->all());
 
-        $user = new User($request->all());
-        $user->save();
+            // Save the payment request
+            $result = $payment->save();
+
+            return $this->respondCondition($result, 'payment.store_failed');
+        }
     }
 
     /**
@@ -57,12 +65,12 @@ class PaymentController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param Address $address
+     * @param Payment $payment
      * @return \Illuminate\Http\Response
      */
-    public function show(Address $address)
+    public function show(Payment $payment)
     {
-        return $address;
+        return $this->respondData($payment);
     }
 
     /**
@@ -74,18 +82,41 @@ class PaymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Need to fix this.
+
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'amount' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('payment/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create payment model instance with request
+            $payment = new Payment($request->all());
+
+            // Save the payment request
+            $result = $payment->save();
+
+            return $this->respondCondition($result, 'payment.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Address $address
+     * @param  Payment $payment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Address $address)
+    public function destroy(Payment $payment)
     {
-        $address->delete();
+        $result = $payment->delete();
+
+        return $this->respondCondition($result, 'payment.destroy_failed');
     }
 
     public function search()
