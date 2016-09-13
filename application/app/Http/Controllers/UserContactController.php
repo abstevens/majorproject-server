@@ -92,7 +92,7 @@ class ContactController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('address/')
+            return redirect('contact/')
                 ->withErrors($validator)
                 ->withInput();
         } else {
