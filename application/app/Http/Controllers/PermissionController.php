@@ -4,33 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Permission;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Illuminate\Contracts\Validation\Validator;
 
 class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param Permission $permission
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Permission $permission)
     {
-        // Get Data from the model (all school DB entries)
-        $permissions = Permission::all();
+        // Store all permissions data
+        $permissions = $permission::all();
 
-        // Return a JSON data
-        return response()->json($permissions);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        // Return permissions data
+        return $this->respondData($permissions);
     }
 
     /**
@@ -41,7 +31,26 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'code' => 'required|integer|max:6',
+        ]);
+
+        // Validate permissions request
+        if ($validator->fails()) {
+            return redirect('permission/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create permission model instance with request
+            $permission = new Permission($request->all());
+
+            // Save the permission request
+            $result = $permission->save();
+
+            return $this->respondCondition($result, 'permission.store_failed');
+        }
     }
 
     /**
@@ -49,28 +58,12 @@ class PermissionController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param  int $id
+     * @param  Permission $permission
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Permission $permission)
     {
-        // Get Data from the model (all school DB entries)
-        //$school = School::with('users')->find($id);
-        $permission = Permission::find($id);
-
-        // Return a JSON data
-        return response()->json($permission);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->respondData($permission);
     }
 
     /**
@@ -82,17 +75,44 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Need to fix this.
+
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'code' => 'required|integer|max:6',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('permission/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create permission model instance with request
+            $permission = new Permission($request->all());
+
+            // Save the permission request
+            $result = $permission->save();
+
+            return $this->respondCondition($result, 'permission.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  Permission $permission
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Permission $permission)
     {
-        //
+        $result = $permission->delete();
+
+        return $this->respondCondition($result, 'permission.destroy_failed');
+    }
+
+    public function search()
+    {
+
     }
 }
