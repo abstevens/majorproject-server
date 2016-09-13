@@ -10,23 +10,23 @@ namespace App\Http\Controllers;
 
 use App\EventAttendance;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\Validator;
 
 class EventAttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param Address $address
+     * @param EventAttendance $attendance
      * @return \Illuminate\Http\Response
      */
-    public function index(Address $address)
+    public function index(EventAttendance $attendance)
     {
-        return $address::all();
-        // Get Data from the model (all school DB entries)
-        //$users = User::all();
+        // Store all attendances data in $users
+        $attendances = $attendance::all();
 
-        // Return a JSON data
-        //return response()->json($users);
+        // Return attendances data
+        return $this->respondData($attendances);
     }
 
     /**
@@ -37,19 +37,27 @@ class EventAttendanceController extends Controller
      */
     public function store(Request $request)
     {
+        // Set validation rules
         $validator = Validator::make($request->all(), [
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
+            'event_id' => 'required|integer',
+            'user_id' => 'required|integer',
+            'status' => 'required|integer',
         ]);
 
+        // Validate attendance request
         if ($validator->fails()) {
-            return redirect('post/create')
+            return redirect('event_attendance/')
                 ->withErrors($validator)
                 ->withInput();
-        }
+        } else {
+            // Create attendance model instance with request
+            $attendance = new EventAttendance($request->all());
 
-        $user = new User($request->all());
-        $user->save();
+            // Save the attendance request
+            $result = $attendance->save();
+
+            return $this->respondCondition($result, 'attendance.store_failed');
+        }
     }
 
     /**
@@ -57,12 +65,12 @@ class EventAttendanceController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param Address $address
+     * @param EventAttendance $attendance
      * @return \Illuminate\Http\Response
      */
-    public function show(Address $address)
+    public function show(EventAttendance $attendance)
     {
-        return $address;
+        return $this->respondData($attendance);
     }
 
     /**
@@ -74,18 +82,41 @@ class EventAttendanceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Need to fix this.
+
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'event_id' => 'required|integer',
+            'user_id' => 'required|integer',
+            'status' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('attendance/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create attendance model instance with request
+            $attendance = new EventAttendance($request->all());
+
+            // Save the attendance request
+            $result = $attendance->save();
+
+            return $this->respondCondition($result, 'attendance.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Address $address
+     * @param  EventAttendance $attendance
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Address $address)
+    public function destroy(EventAttendance $attendance)
     {
-        $address->delete();
+        $result = $attendance->delete();
+
+        return $this->respondCondition($result, 'attendance.destroy_failed');
     }
 
     public function search()
