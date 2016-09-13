@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Illuminate\Contracts\Validation\Validator;
 
 class UserController extends Controller
 {
@@ -33,7 +32,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|unique:name|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'username' => 'required|string|unique:username|max:255',
             'email' => 'required|email|unique:email|max:255',
             'password' => 'required|string|max:60',
         ]);
@@ -78,7 +79,9 @@ class UserController extends Controller
         // TODO: Need to fix this.
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|unique:name|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'username' => 'required|string|unique:username|max:255',
             'email' => 'required|email|unique:email|max:255',
             'password' => 'required|string|max:60',
         ]);
