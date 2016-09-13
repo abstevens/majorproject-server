@@ -8,25 +8,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Contact;
+use App\UserContact;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\Validator;
 
 class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param Address $address
+     * @param UserContact $contact
      * @return \Illuminate\Http\Response
      */
-    public function index(Address $address)
+    public function index(UserContact $contact)
     {
-        return $address::all();
-        // Get Data from the model (all school DB entries)
-        //$users = User::all();
+        // Store all contacts data in $users
+        $contacts = $contact::all();
 
-        // Return a JSON data
-        //return response()->json($users);
+        // Return contacts data
+        return $this->respondData($contacts);
     }
 
     /**
@@ -37,19 +37,27 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+        // Set validation rules
         $validator = Validator::make($request->all(), [
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
+            'user_id' => 'required|integer',
+            'type' => 'required|string|max:255',
+            'value' => 'required|string|max:255',
         ]);
 
+        // Validate contact request
         if ($validator->fails()) {
-            return redirect('post/create')
+            return redirect('contact/')
                 ->withErrors($validator)
                 ->withInput();
-        }
+        } else {
+            // Create contact model instance with request
+            $contact = new UserContact($request->all());
 
-        $user = new User($request->all());
-        $user->save();
+            // Save the contact request
+            $result = $contact->save();
+
+            return $this->respondCondition($result, 'contact.store_failed');
+        }
     }
 
     /**
@@ -57,12 +65,12 @@ class ContactController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param Address $address
+     * @param UserContact $contact
      * @return \Illuminate\Http\Response
      */
-    public function show(Address $address)
+    public function show(UserContact $contact)
     {
-        return $address;
+        return $this->respondData($contact);
     }
 
     /**
@@ -74,18 +82,41 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Need to fix this.
+
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'type' => 'required|string|max:255',
+            'value' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('address/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create contact model instance with request
+            $contact = new UserContact($request->all());
+
+            // Save the contact request
+            $result = $contact->save();
+
+            return $this->respondCondition($result, 'contact.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Address $address
+     * @param  UserContact $contact
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Address $address)
+    public function destroy(UserContact $contact)
     {
-        $address->delete();
+        $result = $contact->delete();
+
+        return $this->respondCondition($result, 'contact.destroy_failed');
     }
 
     public function search()
