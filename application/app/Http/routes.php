@@ -46,8 +46,8 @@ Route::group(['middleware' => 'api'], function () {
     Route::model('course_price', 'App\CoursePrice');
     Route::resource('course_price', 'CoursePriceController', ['except' => ['edit', 'create']]);
 
-    Route::model('detail', 'App\Detail');
-    Route::resource('detail', 'DetailController', ['except' => ['edit', 'create']]);
+    Route::model('detail', 'App\UserDetail');
+    Route::resource('detail', 'UserDetailController', ['except' => ['edit', 'create']]);
 
     Route::model('event', 'App\Event');
     Route::resource('event', 'EventController', ['except' => ['edit', 'create']]);
