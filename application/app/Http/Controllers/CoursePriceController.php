@@ -8,25 +8,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Detail;
+use App\CoursePrice;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\Validator;
 
 class CoursePriceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param Address $address
+     * @param CoursePrice $price
      * @return \Illuminate\Http\Response
      */
-    public function index(Address $address)
+    public function index(CoursePrice $price)
     {
-        return $address::all();
-        // Get Data from the model (all school DB entries)
-        //$users = User::all();
+        // Store all prices data in $users
+        $prices = $price::all();
 
-        // Return a JSON data
-        //return response()->json($users);
+        // Return prices data
+        return $this->respondData($prices);
     }
 
     /**
@@ -37,19 +37,27 @@ class CoursePriceController extends Controller
      */
     public function store(Request $request)
     {
+        // Set validation rules
         $validator = Validator::make($request->all(), [
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
+            'course_id' => 'required|integer',
+            'price' => 'required|string|max:255',
+            'installments' => 'required|integer|max:5',
         ]);
 
+        // Validate price request
         if ($validator->fails()) {
-            return redirect('post/create')
+            return redirect('price/')
                 ->withErrors($validator)
                 ->withInput();
-        }
+        } else {
+            // Create price model instance with request
+            $price = new CoursePrice($request->all());
 
-        $user = new User($request->all());
-        $user->save();
+            // Save the price request
+            $result = $price->save();
+
+            return $this->respondCondition($result, 'price.store_failed');
+        }
     }
 
     /**
@@ -57,12 +65,12 @@ class CoursePriceController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param Address $address
+     * @param CoursePrice $price
      * @return \Illuminate\Http\Response
      */
-    public function show(Address $address)
+    public function show(CoursePrice $price)
     {
-        return $address;
+        return $this->respondData($price);
     }
 
     /**
@@ -74,18 +82,41 @@ class CoursePriceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Need to fix this.
+
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'course_id' => 'required|integer',
+            'price' => 'required|string|max:255',
+            'installments' => 'required|integer|max:5',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('price/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create price model instance with request
+            $price = new CoursePrice($request->all());
+
+            // Save the price request
+            $result = $price->save();
+
+            return $this->respondCondition($result, 'price.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Address $address
+     * @param  CoursePrice $price
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Address $address)
+    public function destroy(CoursePrice $price)
     {
-        $address->delete();
+        $result = $price->delete();
+
+        return $this->respondCondition($result, 'price.destroy_failed');
     }
 
     public function search()
