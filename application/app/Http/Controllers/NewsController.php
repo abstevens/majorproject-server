@@ -4,33 +4,23 @@ namespace App\Http\Controllers;
 
 use App\News;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Illuminate\Contracts\Validation\Validator;
 
 class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param News $news
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(News $news)
     {
-        // Get Data from the model (all school DB entries)
-        $news = News::all();
+        // Store all news data
+        $news = $news::all();
 
-        // Return a JSON data
-        return response()->json($news);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        // Return addresses data
+        return $this->respondData($news);
     }
 
     /**
@@ -41,7 +31,27 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        // Validate news request
+        if ($validator->fails()) {
+            return redirect('news/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create news model instance with request
+            $news = new News($request->all());
+
+            // Save the news request
+            $result = $news->save();
+
+            return $this->respondCondition($result, 'news.store_failed');
+        }
     }
 
     /**
@@ -49,28 +59,12 @@ class NewsController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param  int $id
+     * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(News $news)
     {
-        // Get Data from the model (all school DB entries)
-        //$school = School::with('users')->find($id);
-        $news = News::find($id);
-
-        // Return a JSON data
-        return response()->json($news);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->respondData($news);
     }
 
     /**
@@ -82,19 +76,45 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Need to fix this.
+
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('news/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create news model instance with request
+            $address = new News($request->all());
+
+            // Save the news request
+            $result = $address->save();
+
+            return $this->respondCondition($result, 'news.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(News $news)
     {
-        //
+        $result = $news->delete();
+
+        return $this->respondCondition($result, 'news.destroy_failed');
     }
 
+    public function search()
+    {
 
+    }
 }
