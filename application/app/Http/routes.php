@@ -37,8 +37,8 @@ Route::group(['middleware' => 'api'], function () {
     Route::model('award', 'App\CourseAward');
     Route::resource('award', 'CourseAwardController', ['except' => ['edit', 'create']]);
 
-    Route::model('contact', 'App\Contact');
-    Route::resource('contact', 'ContactController', ['except' => ['edit', 'create']]);
+    Route::model('contact', 'App\UserContact');
+    Route::resource('contact', 'UserContactController', ['except' => ['edit', 'create']]);
 
     Route::model('course', 'App\Course');
     Route::resource('course', 'CourseController', ['except' => ['edit', 'create']]);
