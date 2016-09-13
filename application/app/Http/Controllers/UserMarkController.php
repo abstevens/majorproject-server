@@ -8,25 +8,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Mark;
+use App\UserMark;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\Validator;
 
-class MarkController extends Controller
+class UserMarkController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param Address $address
+     * @param UserMark $mark
      * @return \Illuminate\Http\Response
      */
-    public function index(Address $address)
+    public function index(UserMark $mark)
     {
-        return $address::all();
-        // Get Data from the model (all school DB entries)
-        //$users = User::all();
+        // Store all marks data in $users
+        $marks = $mark::all();
 
-        // Return a JSON data
-        //return response()->json($users);
+        // Return marks data
+        return $this->respondData($marks);
     }
 
     /**
@@ -37,19 +37,27 @@ class MarkController extends Controller
      */
     public function store(Request $request)
     {
+        // Set validation rules
         $validator = Validator::make($request->all(), [
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
+            'user_id' => 'required|integer',
+            'assignment' => 'required|string|max:255',
+            'percentage' => 'required|integer|max:3',
         ]);
 
+        // Validate mark request
         if ($validator->fails()) {
-            return redirect('post/create')
+            return redirect('mark/')
                 ->withErrors($validator)
                 ->withInput();
-        }
+        } else {
+            // Create mark model instance with request
+            $mark = new UserMark($request->all());
 
-        $user = new User($request->all());
-        $user->save();
+            // Save the mark request
+            $result = $mark->save();
+
+            return $this->respondCondition($result, 'mark.store_failed');
+        }
     }
 
     /**
@@ -57,12 +65,12 @@ class MarkController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param Address $address
+     * @param UserMark $mark
      * @return \Illuminate\Http\Response
      */
-    public function show(Address $address)
+    public function show(UserMark $mark)
     {
-        return $address;
+        return $this->respondData($mark);
     }
 
     /**
@@ -74,18 +82,41 @@ class MarkController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Need to fix this.
+
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'assignment' => 'required|string|max:255',
+            'percentage' => 'required|integer|max:3',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('mark/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create mark model instance with request
+            $mark = new UserMark($request->all());
+
+            // Save the mark request
+            $result = $mark->save();
+
+            return $this->respondCondition($result, 'mark.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Address $address
+     * @param  UserMark $mark
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Address $address)
+    public function destroy(UserMark $mark)
     {
-        $address->delete();
+        $result = $mark->delete();
+
+        return $this->respondCondition($result, 'mark.destroy_failed');
     }
 
     public function search()
