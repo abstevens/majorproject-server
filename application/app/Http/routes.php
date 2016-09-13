@@ -64,6 +64,9 @@ Route::group(['middleware' => 'api'], function () {
     Route::model('payment', 'App\Payment');
     Route::resource('payment', 'PaymentController', ['except' => ['edit', 'create']]);
 
+    Route::model('price', 'App\CoursePrice');
+    Route::resource('price', 'CoursePriceController', ['except' => ['edit', 'create']]);
+
     Route::model('permission', 'App\Permission');
     Route::resource('permission', 'PermissionController', ['except' => ['edit', 'create']]);
 
