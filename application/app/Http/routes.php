@@ -55,8 +55,8 @@ Route::group(['middleware' => 'api'], function () {
     Route::model('event_attendance', 'App\EventAttendance');
     Route::resource('event_attendance', 'EventAttendanceController', ['except' => ['edit', 'create']]);
 
-    Route::model('mark', 'App\Mark');
-    Route::resource('mark', 'MarkController', ['except' => ['edit', 'create']]);
+    Route::model('mark', 'App\UserMark');
+    Route::resource('mark', 'UserMarkController', ['except' => ['edit', 'create']]);
 
     Route::model('news', 'App\News');
     Route::resource('news', 'NewsController', ['except' => ['edit', 'create']]);
