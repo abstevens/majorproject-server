@@ -1,26 +1,31 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: AlexStevens
+ * Date: 22/08/16
+ * Time: 20:40
+ */
 
 namespace App\Http\Controllers;
 
 use App\Event;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Illuminate\Contracts\Validation\Validator;
 
 class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param Event $event
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Event $event)
     {
-        // Store all events with attendances
-//        $events = Event::with('attendances')->get();
-        $events = Event::all();
+        // Store all events data in $users
+        $events = $event::all();
 
-        // Return a JSON data
+        // Return events data
         return $this->respondData($events);
     }
 
@@ -32,27 +37,31 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO: Validate the request
-        // Have a look if Laravel's validation can be of any use
-        // https://laravel.com/docs/5.2/validation#quick-writing-the-validation-logic
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'organizer_id' => 'required|integer',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'date_time' => 'required|date',
+            'location' => 'required|string|max:255',
+            'price' => 'string|max:6',
+            'limit_reservations' => 'integer',
+        ]);
 
-        // Create event model instance
-        $event = new Event();
+        // Validate events request
+        if ($validator->fails()) {
+            return redirect('event/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create event model instance with request
+            $event = new Event($request->all());
 
-        // Set attributes
-        $event->organizer_id = $request->organizer_id;
-        $event->title = $request->title;
-        $event->description = $request->description;
-        $event->date_time = $request->date_time;
-        $event->location = $request->location;
-        $event->price = $request->price;
-        $event->limit_reservations = $request->limit_reservations;
+            // Save the event request
+            $result = $event->save();
 
-        // Call and store save method
-        $result = $event->save();
-
-        // Return JSON response if save succeeded or not
-        return $this->respondCondition($result, 'event.store_failed');
+            return $this->respondCondition($result, 'event.store_failed');
+        }
     }
 
     /**
@@ -60,15 +69,11 @@ class EventController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param  int $id
+     * @param  Event $event
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Event $event)
     {
-        // Store an event record
-        $event = Event::find($id);
-
-        // Return a JSON data
         return $this->respondData($event);
     }
 
@@ -81,27 +86,32 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Retrieve event model instance
-        $event = Event::find($id);
+        // TODO: Need to fix this.
 
-//        TODO: Use Auth!
-//        $user = Auth::user();
-//        if ($user->id !== $event->organizer_id) return $this->respondError('Only the organizer of this event is allowed to make changes'); // json['error' => error_msg, 'status' => StatusCode::FAILED]
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'organizer_id' => 'required|integer',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'date_time' => 'required|date',
+            'location' => 'required|string|max:255',
+            'price' => 'string|max:6',
+            'limit_reservations' => 'integer',
+        ]);
 
-        // Set attributes
-//        $event->organizer_id = $request->organizer_id;
-        $event->title = $request->title;
-        $event->description = $request->description;
-        $event->date_time = $request->date_time;
-        $event->location = $request->location;
-        $event->price = $request->price;
-        $event->limit_reservations = $request->limit_reservations;
+        if ($validator->fails()) {
+            return redirect('event/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create event model instance with request
+            $event = new Event($request->all());
 
-        // Call and store save method
-        $result = $event->save();
+            // Save the event request
+            $result = $event->save();
 
-        // Return JSON response if save succeeded or not
-        return $this->respondCondition($result, 'event.update_failed');
+            return $this->respondCondition($result, 'event.update_failed');
+        }
     }
 
     /**
@@ -109,18 +119,18 @@ class EventController extends Controller
      *
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  Event $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Event $event)
     {
-        // Retrieve event model instance
-        $event = Event::find($id);
-
-        // Call and store delete method
         $result = $event->delete();
 
-        // Return JSON response if save succeeded or not
         return $this->respondCondition($result, 'event.destroy_failed');
+    }
+
+    public function search()
+    {
+
     }
 }
