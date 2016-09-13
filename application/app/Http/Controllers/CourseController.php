@@ -4,33 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Illuminate\Contracts\Validation\Validator;
 
 class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param Course $course
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Course $course)
     {
-        // Get Data from the model (all school DB entries)
-        $courses = Course::all();
+        // Store all addresses data in $users
+        $courses = $course::all();
 
-        // Return a JSON data
-        return response()->json($courses);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        // Return addresses data
+        return $this->respondData($courses);
     }
 
     /**
@@ -41,7 +31,26 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'code' => 'int|max:255',
+        ]);
+
+        // Validate courses request
+        if ($validator->fails()) {
+            return redirect('course/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create course model instance with request
+            $course = new Course($request->all());
+
+            // Save the course request
+            $result = $course->save();
+
+            return $this->respondCondition($result, 'course.store_failed');
+        }
     }
 
     /**
@@ -49,28 +58,12 @@ class CourseController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param  int $id
+     * @param  Course $course
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Course $course)
     {
-        // Get Data from the model (all school DB entries)
-        //$school = School::with('users')->find($id);
-        $course = Course::find($id);
-
-        // Return a JSON data
-        return response()->json($course);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->respondData($course);
     }
 
     /**
@@ -82,17 +75,44 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Need to fix this.
+
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'code' => 'int|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('address/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create course model instance with request
+            $address = new Course($request->all());
+
+            // Save the course request
+            $result = $address->save();
+
+            return $this->respondCondition($result, 'course.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  Course $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Course $course)
     {
-        //
+        $result = $course->delete();
+
+        return $this->respondCondition($result, 'address.destroy_failed');
+    }
+
+    public function search()
+    {
+
     }
 }
