@@ -8,25 +8,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Detail;
+use App\UserDetail;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\Validator;
 
-class DetailController extends Controller
+class UserDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param Address $address
+     * @param UserDetail $detail
      * @return \Illuminate\Http\Response
      */
-    public function index(Address $address)
+    public function index(UserDetail $detail)
     {
-        return $address::all();
-        // Get Data from the model (all school DB entries)
-        //$users = User::all();
+        // Store all details data in $users
+        $details = $detail::all();
 
-        // Return a JSON data
-        //return response()->json($users);
+        // Return details data
+        return $this->respondData($details);
     }
 
     /**
@@ -37,19 +37,27 @@ class DetailController extends Controller
      */
     public function store(Request $request)
     {
+        // Set validation rules
         $validator = Validator::make($request->all(), [
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
+            'user_id' => 'required|integer',
+            'type' => 'required|string|max:255',
+            'value' => 'required|string|max:255',
         ]);
 
+        // Validate addresses request
         if ($validator->fails()) {
-            return redirect('post/create')
+            return redirect('detail/')
                 ->withErrors($validator)
                 ->withInput();
-        }
+        } else {
+            // Create address model instance with request
+            $detail = new UserDetail($request->all());
 
-        $user = new User($request->all());
-        $user->save();
+            // Save the address request
+            $result = $detail->save();
+
+            return $this->respondCondition($result, 'detail.store_failed');
+        }
     }
 
     /**
@@ -57,12 +65,12 @@ class DetailController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param Address $address
+     * @param UserDetail $detail
      * @return \Illuminate\Http\Response
      */
-    public function show(Address $address)
+    public function show(UserDetail $detail)
     {
-        return $address;
+        return $this->respondData($detail);
     }
 
     /**
@@ -74,18 +82,41 @@ class DetailController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Need to fix this.
+
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'type' => 'required|string|max:255',
+            'value' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('detail/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create address model instance with request
+            $detail = new UserDetail($request->all());
+
+            // Save the address request
+            $result = $detail->save();
+
+            return $this->respondCondition($result, 'detail.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Address $address
+     * @param  UserDetail $detail
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Address $address)
+    public function destroy(UserDetail $detail)
     {
-        $address->delete();
+        $result = $detail->delete();
+
+        return $this->respondCondition($result, 'detail.destroy_failed');
     }
 
     public function search()
