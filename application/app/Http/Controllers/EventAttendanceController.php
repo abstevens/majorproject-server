@@ -92,7 +92,7 @@ class EventAttendanceController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('attendance/')
+            return redirect('event_attendance/')
                 ->withErrors($validator)
                 ->withInput();
         } else {
