@@ -12,7 +12,7 @@ use App\UserContact;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 
-class ContactController extends Controller
+class UserContactController extends Controller
 {
     /**
      * Display a listing of the resource.
