@@ -2,35 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Award;
+use App\CourseAward;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\Validator;
 
-use App\Http\Requests;
-
-class AwardController extends Controller
+class CourseAwardController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param CourseAward $award
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CourseAward $award)
     {
-        // Get Data from the model (all school DB entries)
-        $awards = Award::all();
+        // Store all awards data in $users
+        $awards = $award::all();
 
-        // Return a JSON data
-        return response()->json($awards);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
+        // Return awards data
+        return $this->respondData($awards);
     }
 
     /**
@@ -41,7 +31,26 @@ class AwardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'course_id' => 'required|integer',
+            'name' => 'required|string|max:255',
+        ]);
+
+        // Validate addresses request
+        if ($validator->fails()) {
+            return redirect('award/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create address model instance with request
+            $award = new CourseAward($request->all());
+
+            // Save the address request
+            $result = $award->save();
+
+            return $this->respondCondition($result, 'award.store_failed');
+        }
     }
 
     /**
@@ -49,28 +58,12 @@ class AwardController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param  int $id
+     * @param  CourseAward $award
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(CourseAward $award)
     {
-        // Get Data from the model (all school DB entries)
-        //$school = School::with('users')->find($id);
-        $award = Award::find($id);
-
-        // Return a JSON data
-        return response()->json($award);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->respondData($award);
     }
 
     /**
@@ -82,17 +75,44 @@ class AwardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Need to fix this.
+
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'course_id' => 'required|integer',
+            'name' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('award/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create address model instance with request
+            $award = new CourseAward($request->all());
+
+            // Save the address request
+            $result = $award->save();
+
+            return $this->respondCondition($result, 'award.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  CourseAward $award
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CourseAward $award)
     {
-        //
+        $result = $award->delete();
+
+        return $this->respondCondition($result, 'award.destroy_failed');
+    }
+
+    public function search()
+    {
+
     }
 }
