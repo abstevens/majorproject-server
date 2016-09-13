@@ -8,25 +8,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Address;
+use App\UserAddress;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\Validator;
 
-class AddressController extends Controller
+class UserAddressController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param Address $address
+     * @param UserAddress $address
      * @return \Illuminate\Http\Response
      */
-    public function index(Address $address)
+    public function index(UserAddress $address)
     {
-        return $address::all();
-        // Get Data from the model (all school DB entries)
-        //$users = User::all();
+        // Store all addresses data in $users
+        $addresses = $address::all();
 
-        // Return a JSON data
-        //return response()->json($users);
+        // Return addresses data
+        return $this->respondData($addresses);
     }
 
     /**
@@ -37,19 +37,29 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
+        // Set validation rules
         $validator = Validator::make($request->all(), [
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
+            'user_id' => 'required|integer',
+            'street' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'postcode' => 'required|string|max:32',
         ]);
 
+        // Validate addresses request
         if ($validator->fails()) {
-            return redirect('post/create')
+            return redirect('address/')
                 ->withErrors($validator)
                 ->withInput();
-        }
+        } else {
+            // Create address model instance with request
+            $address = new UserAddress($request->all());
 
-        $user = new User($request->all());
-        $user->save();
+            // Save the address request
+            $result = $address->save();
+
+            return $this->respondCondition($result, 'address.store_failed');
+        }
     }
 
     /**
@@ -57,12 +67,12 @@ class AddressController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param Address $address
+     * @param UserAddress $address
      * @return \Illuminate\Http\Response
      */
-    public function show(Address $address)
+    public function show(UserAddress $address)
     {
-        return $address;
+        return $this->respondData($address);
     }
 
     /**
@@ -74,18 +84,43 @@ class AddressController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Need to fix this.
+
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'street' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'postcode' => 'required|string|max:32',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('address/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create address model instance with request
+            $address = new UserAddress($request->all());
+
+            // Save the address request
+            $result = $address->save();
+
+            return $this->respondCondition($result, 'address.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Address $address
+     * @param  UserAddress $address
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Address $address)
+    public function destroy(UserAddress $address)
     {
-        $address->delete();
+        $result = $address->delete();
+
+        return $this->respondCondition($result, 'address.destroy_failed');
     }
 
     public function search()
