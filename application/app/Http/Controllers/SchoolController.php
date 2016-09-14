@@ -4,35 +4,23 @@ namespace App\Http\Controllers;
 
 use App\School;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Illuminate\Contracts\Validation\Validator;
 
 class SchoolController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param  School  $school
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(School $school)
     {
-        // Get Data from the model (all school DB entries)
-        $schools = School::all();
+        // Store all schools data
+        $schools = $school::all();
 
-        // Return a JSON data
-        return response()->json($schools);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $school = new School('SAE Amstelveen');
-        //$school->name =
-        $school->save();
+        // Return schools data
+        return $this->respondData($schools);
     }
 
     /**
@@ -43,7 +31,25 @@ class SchoolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+        ]);
+
+        // Validate schools request
+        if ($validator->fails()) {
+            return redirect('school/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create school model instance with request
+            $school = new School($request->all());
+
+            // Save the school request
+            $result = $school->save();
+
+            return $this->respondCondition($result, 'school.store_failed');
+        }
     }
 
     /**
@@ -51,29 +57,12 @@ class SchoolController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param  int  $id
+     * @param  School  $school
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(School $school)
     {
-        // Get Data from the model (all school DB entries)
-        //$school = School::with('users')->find($id);
-        $school = School::find($id);
-
-        // Return a JSON data
-        return response()->json($school);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        // Not used
-        // it usually returns an html Form with items data for editing
+        return $this->respondData($school);
     }
 
     /**
@@ -85,17 +74,43 @@ class SchoolController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // TODO: Need to fix this.
 
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('school/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create school model instance with request
+            $address = new School($request->all());
+
+            // Save the school request
+            $result = $address->save();
+
+            return $this->respondCondition($result, 'school.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  School  $school
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(School $school)
     {
-        //
+        $result = $school->delete();
+
+        return $this->respondCondition($result, 'school.destroy_failed');
+    }
+
+    public function search()
+    {
+
     }
 }
