@@ -70,7 +70,7 @@ Route::group(['middleware' => 'api'], function () {
     Route::model('permission', 'App\Permission');
     Route::resource('permission', 'PermissionController', ['except' => ['edit', 'create']]);
 
-    Route::model('role', 'App\User');
+    Route::model('role', 'App\Role');
     Route::resource('role', 'RoleController', ['except' => ['edit', 'create']]);
 
     Route::model('school', 'App\School');
