@@ -4,33 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Illuminate\Contracts\Validation\Validator;
 
 class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param Role $role
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Role $role)
     {
-        // Get Data from the model (all school DB entries)
-        $roles = Role::all();
+        // Store all roles data
+        $roles = $role::all();
 
-        // Return a JSON data
-        return response()->json($roles);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        // Return roles data
+        return $this->respondData($roles);
     }
 
     /**
@@ -41,7 +31,25 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+        ]);
+
+        // Validate roles request
+        if ($validator->fails()) {
+            return redirect('role/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create role model instance with request
+            $role = new Role($request->all());
+
+            // Save the role request
+            $result = $role->save();
+
+            return $this->respondCondition($result, 'role.store_failed');
+        }
     }
 
     /**
@@ -49,28 +57,12 @@ class RoleController extends Controller
      *
      * TODO: perform id validation!!
      *
-     * @param  int $id
+     * @param  Role $role
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Role $role)
     {
-        // Get Data from the model (all school DB entries)
-        //$school = School::with('users')->find($id);
-        $role = Role::find($id);
-
-        // Return a JSON data
-        return response()->json($role);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->respondData($role);
     }
 
     /**
@@ -82,17 +74,43 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Need to fix this.
+
+        // Set validation rules
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('role/')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // Create role model instance with request
+            $role = new Role($request->all());
+
+            // Save the role request
+            $result = $role->save();
+
+            return $this->respondCondition($result, 'role.update_failed');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  Role $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        //
+        $result = $role->delete();
+
+        return $this->respondCondition($result, 'role.destroy_failed');
+    }
+
+    public function search()
+    {
+
     }
 }
