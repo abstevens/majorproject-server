@@ -13,13 +13,14 @@ class Controller extends BaseController
 
     /**
      * @param $result
+     * @param $dataReturned
      * @param $errorTranslation
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondCondition($result, $errorTranslation)
+    protected function respondCondition(bool $result, $dataReturned, string $errorTranslation): \Illuminate\Http\JsonResponse
     {
         if ($result) {
-            $output = $this->respondData();
+            $output = $this->respondData($dataReturned);
         } else {
             $output = $this->respondError(trans($errorTranslation));
         }

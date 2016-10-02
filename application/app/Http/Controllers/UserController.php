@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -34,24 +34,23 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'username' => 'required|string|unique:username|max:255',
-            'email' => 'required|email|unique:email|max:255',
+            'username' => 'required|string|unique:users|max:255',
+            'email' => 'required|email|unique:users|max:255',
             'password' => 'required|string|max:60',
         ]);
 
         if ($validator->fails()) {
-            return redirect('user/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create user model instance with request
-            $user = new User($request->all());
-
-            // Save the user request
-            $result = $user->save();
-
-            return $this->respondCondition($result, 'user.store_failed');
+            return $this->respondError($validator->errors()->all());
         }
+
+        // Create user model instance with request
+        // TODO: Step for encryption password
+        $user = new User($request->all());
+
+        // Save the user request
+        $result = $user->save();
+
+        return $this->respondCondition($result, $user->id, 'user.store_failed');
     }
 
     /**
