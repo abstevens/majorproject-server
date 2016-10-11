@@ -3,10 +3,9 @@
 use \App\CourseAward;
 
 $factory->define(CourseAward::class, function (Faker\Generator $faker) {
-    $createdAt = $faker->dateTimeThisMonth;
+    $createdAt = daylightSavingTimeFix($faker->dateTimeThisMonth);
     return [
         'name' => $faker->name,
         'created_at' => $createdAt,
-        'updated_at' => $createdAt,
     ];
 });

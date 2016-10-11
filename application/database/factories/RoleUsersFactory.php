@@ -3,9 +3,8 @@
 use \App\RoleUser;
 
 $factory->define(RoleUser::class, function (Faker\Generator $faker) {
-    $createdAt = $faker->dateTimeThisYear;
+    $createdAt = daylightSavingTimeFix($faker->dateTimeThisYear);
     return [
         'created_at' => $createdAt,
-        'updated_at' => $createdAt,
     ];
 });
