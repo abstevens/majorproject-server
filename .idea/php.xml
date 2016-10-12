@@ -7,11 +7,7 @@
   </component>
   <component name="PhpProjectServersManager">
     <servers>
-      <server host="10.3.3.31" id="e12b3441-4b96-4f11-8836-fcf22ca2cc83" name="MajorProjectV2" use_path_mappings="true">
-        <path_mappings>
-          <mapping local-root="$PROJECT_DIR$" remote-root="/var/www/application" />
-        </path_mappings>
-      </server>
+      <server host="10.3.3.31" id="e12b3441-4b96-4f11-8836-fcf22ca2cc83" name="MajorProjectV2" use_path_mappings="true" />
     </servers>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
