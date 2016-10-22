@@ -17,5 +17,5 @@ return [
     'allowedMethods' => ['GET', 'POST', 'PUT',  'DELETE'],
     'exposedHeaders' => [],
     'maxAge' => 0,
-    'hosts' => ['majorproject.dev'],
+    'hosts' => ['localhost', '127.0.0.1', 'mjp.dev'],
 ];
