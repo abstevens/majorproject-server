@@ -19,11 +19,11 @@ class Course extends Model
 
     public function classes()
     {
-        return $this->hasMany('App\Class');
+        return $this->hasMany('App\CourseClass');
     }
 
     public function awards()
     {
-        return $this->hasMany('app\Award');
+        return $this->hasMany('app\CourseAward');
     }
 }
