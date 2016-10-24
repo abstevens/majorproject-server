@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class CourseClass extends Model
 {
-    public function users()
-    {
-        return $this->belongsToMany('App\User');
-    }
+//    public function users()
+//    {
+//        return $this->belongsToMany('App\User');
+//    }
 
     public function courses()
     {
