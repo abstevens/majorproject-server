@@ -2,10 +2,13 @@
 
 namespace App;
 
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    use HasApiTokens;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'created_at', 'deleted_at', 'updated_at'
     ];
 
     /**
@@ -43,22 +46,22 @@ class User extends Authenticatable
 
     public function marks()
     {
-        return $this->hasOne('App\Mark');
+        return $this->hasOne('App\UserMark');
     }
 
     public function details()
     {
-        return $this->hasMany('App\Detail');
+        return $this->hasMany('App\UserDetail');
     }
 
     public function contacts()
     {
-        return $this->hasMany('App\Contact');
+        return $this->hasMany('App\UserContact');
     }
 
     public function addresses()
     {
-        return $this->hasOne('App\Address');
+        return $this->hasOne('App\UserAddress');
     }
 
     public function events()
@@ -83,7 +86,7 @@ class User extends Authenticatable
 
     public function classes()
     {
-        return $this->belongsToMany('App\Class');
+        return $this->belongsToMany('App\CourseClass');
     }
 
     public function news()
