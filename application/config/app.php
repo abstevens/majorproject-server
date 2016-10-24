@@ -180,6 +180,8 @@ return [
 
         // CORS Bundle
         Barryvdh\Cors\ServiceProvider::class,
+
+        Laravel\Passport\PassportServiceProvider::class,
     ],
 
     /*
