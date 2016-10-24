@@ -109,8 +109,11 @@ class SchoolController extends Controller
         return $this->respondCondition($result, 'school.destroy_failed');
     }
 
-    public function search()
+    public function search(Request $request, $searchString)
     {
+        $schools = School::where('name', 'LIKE', "%{$searchString}%")
+            ->get();
 
+        return $this->respondData($schools);
     }
 }

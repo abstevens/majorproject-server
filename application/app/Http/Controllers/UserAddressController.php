@@ -10,22 +10,16 @@ namespace App\Http\Controllers;
 
 use App\UserAddress;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\Validation\Validator;
 
 class UserAddressController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param UserAddress $address
-     * @return \Illuminate\Http\Response
-     */
-    public function index(UserAddress $address)
+    public function index(UserAddress $address, int $userId): JsonResponse
     {
         // Store all addresses data in $users
-        $addresses = $address::all();
+        $addresses = $address::where('user_id', '=', $userId)->get();
 
-        // Return addresses data
         return $this->respondData($addresses);
     }
 
@@ -123,8 +117,13 @@ class UserAddressController extends Controller
         return $this->respondCondition($result, 'address.destroy_failed');
     }
 
-    public function search()
+    public function search(Request $request, $searchString)
     {
+        $addresses = UserAddress::where('street', 'LIKE', "%{$searchString}%")
+            ->orWhere('city', 'LIKE', "%{$searchString}%")
+            ->orWhere('country', 'LIKE', "%{$searchString}%")
+            ->get();
 
+        return $this->respondData($addresses);
     }
 }

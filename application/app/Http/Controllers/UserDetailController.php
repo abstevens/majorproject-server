@@ -10,32 +10,21 @@ namespace App\Http\Controllers;
 
 use App\UserDetail;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\Validation\Validator;
 
 class UserDetailController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param UserDetail $detail
-     * @return \Illuminate\Http\Response
-     */
-    public function index(UserDetail $detail)
+    public function index(UserDetail $detail, int $userId): JsonResponse
     {
         // Store all details data in $users
-        $details = $detail::all();
+        $details = $detail::where('user_id', '=', $userId)->get();
 
         // Return details data
         return $this->respondData($details);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         // Set validation rules
         $validator = Validator::make($request->all(), [
@@ -119,8 +108,11 @@ class UserDetailController extends Controller
         return $this->respondCondition($result, 'detail.destroy_failed');
     }
 
-    public function search()
+    public function search(Request $request, $searchString)
     {
+        $details = UserDetail::where('type', 'LIKE', "%{$searchString}%")
+            ->get();
 
+        return $this->respondData($details);
     }
 }

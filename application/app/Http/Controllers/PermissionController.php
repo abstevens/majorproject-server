@@ -111,8 +111,12 @@ class PermissionController extends Controller
         return $this->respondCondition($result, 'permission.destroy_failed');
     }
 
-    public function search()
+    public function search(Request $request, $searchString)
     {
+        $permissions = Permission::where('name', 'LIKE', "%{$searchString}%")
+            ->orWhere('code', 'LIKE', "%{$searchString}%")
+            ->get();
 
+        return $this->respondData($permissions);
     }
 }

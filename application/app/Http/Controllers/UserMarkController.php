@@ -10,32 +10,21 @@ namespace App\Http\Controllers;
 
 use App\UserMark;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\Validation\Validator;
 
 class UserMarkController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param UserMark $mark
-     * @return \Illuminate\Http\Response
-     */
-    public function index(UserMark $mark)
+    public function index(UserMark $mark, int $userId): JsonResponse
     {
         // Store all marks data in $users
-        $marks = $mark::all();
+        $marks = $mark::where('user_id', '=', $userId)->get();
 
         // Return marks data
         return $this->respondData($marks);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         // Set validation rules
         $validator = Validator::make($request->all(), [
@@ -119,8 +108,11 @@ class UserMarkController extends Controller
         return $this->respondCondition($result, 'mark.destroy_failed');
     }
 
-    public function search()
+    public function search(Request $request, $searchString)
     {
+        $marks = UserMark::where('assignment', 'LIKE', "%{$searchString}%")
+            ->get();
 
+        return $this->respondData($marks);
     }
 }

@@ -113,8 +113,11 @@ class NewsController extends Controller
         return $this->respondCondition($result, 'news.destroy_failed');
     }
 
-    public function search()
+    public function search(Request $request, $searchString)
     {
+        $news = News::where('title', 'LIKE', "%{$searchString}%")
+            ->get();
 
+        return $this->respondData($news);
     }
 }

@@ -10,36 +10,24 @@ namespace App\Http\Controllers;
 
 use App\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\Validation\Validator;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Payment $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Payment $payment)
+    public function index(Payment $payment, int $userId): JsonResponse
     {
         // Store all payments data
-        $payments = $payment::all();
+        $payments = $payment::where('user_id', '=', $userId)->get();
 
         // Return payments data
         return $this->respondData($payments);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request, int $userId): JsonResponse
     {
         // Set validation rules
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer',
             'amount' => 'required|string|max:255',
             'description' => 'required|string|max:255',
         ]);
@@ -52,6 +40,7 @@ class PaymentController extends Controller
         } else {
             // Create payment model instance with request
             $payment = new Payment($request->all());
+            $payment->user_id = $userId;
 
             // Save the payment request
             $result = $payment->save();
@@ -91,19 +80,15 @@ class PaymentController extends Controller
             'description' => 'required|string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return redirect('payment/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create payment model instance with request
-            $payment = new Payment($request->all());
+        $this->respondErrorOnValidationFail($validator);
 
-            // Save the payment request
-            $result = $payment->save();
+        // Create payment model instance with request
+        $payment = new Payment($request->all());
 
-            return $this->respondCondition($result, 'payment.update_failed');
-        }
+        // Save the payment request
+        $result = $payment->save();
+
+        return $this->respondCondition($result, 'payment.update_failed');
     }
 
     /**

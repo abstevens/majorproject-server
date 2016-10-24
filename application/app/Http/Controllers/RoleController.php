@@ -109,8 +109,11 @@ class RoleController extends Controller
         return $this->respondCondition($result, 'role.destroy_failed');
     }
 
-    public function search()
+    public function search(Request $request, $searchString)
     {
+        $roles = Role::where('name', 'LIKE', "%{$searchString}%")
+            ->get();
 
+        return $this->respondData($roles);
     }
 }

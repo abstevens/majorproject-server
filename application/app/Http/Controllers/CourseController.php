@@ -111,8 +111,12 @@ class CourseController extends Controller
         return $this->respondCondition($result, 'address.destroy_failed');
     }
 
-    public function search()
+    public function search(Request $request, $searchString)
     {
+        $courses = Course::where('name', 'LIKE', "%{$searchString}%")
+            ->orWhere('code', 'LIKE', "%{$searchString}%")
+            ->get();
 
+        return $this->respondData($courses);
     }
 }

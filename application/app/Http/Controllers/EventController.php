@@ -129,8 +129,11 @@ class EventController extends Controller
         return $this->respondCondition($result, 'event.destroy_failed');
     }
 
-    public function search()
+    public function search(Request $request, $searchString)
     {
+        $events = Event::where('title', 'LIKE', "%{$searchString}%")
+            ->get();
 
+        return $this->respondData($events);
     }
 }

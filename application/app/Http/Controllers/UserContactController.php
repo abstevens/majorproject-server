@@ -10,32 +10,20 @@ namespace App\Http\Controllers;
 
 use App\UserContact;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\Validation\Validator;
 
 class UserContactController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param UserContact $contact
-     * @return \Illuminate\Http\Response
-     */
-    public function index(UserContact $contact)
+    public function index(UserContact $contact, int $userId): JsonResponse
     {
         // Store all contacts data in $users
-        $contacts = $contact::all();
+        $contacts = $contact::where('user_id', '=', $userId)->get();
 
-        // Return contacts data
         return $this->respondData($contacts);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         // Set validation rules
         $validator = Validator::make($request->all(), [
@@ -119,8 +107,11 @@ class UserContactController extends Controller
         return $this->respondCondition($result, 'contact.destroy_failed');
     }
 
-    public function search()
+    public function search(Request $request, $searchString)
     {
+        $contacts = UserContact::where('value', 'LIKE', "%{$searchString}%")
+            ->get();
 
+        return $this->respondData($contacts);
     }
 }

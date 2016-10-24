@@ -4,32 +4,20 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param User $user
-     * @return \Illuminate\Http\Response
-     */
-    public function index(User $user)
+    public function index(User $user): JsonResponse
     {
         // Store all users data in $users
         $users = $user::all();
 
-        // Return users data
         return $this->respondData($users);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
@@ -39,9 +27,7 @@ class UserController extends Controller
             'password' => 'required|string|max:60',
         ]);
 
-        if ($validator->fails()) {
-            return $this->respondError($validator->errors()->all());
-        }
+        $this->respondErrorOnValidationFail($validator);
 
         // Create user model instance with request
         // TODO: Step for encryption password
@@ -53,27 +39,15 @@ class UserController extends Controller
         return $this->respondCondition($result, $user->id, 'user.store_failed');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * TODO: perform id validation!!
-     *
-     * @param User $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
+    public function show(User $user): JsonResponse
     {
+        // 'schools', 'events', 'eventAttendances', 'finances', 'news', 'payments', 'roles', 'classes'
+        $user = User::with('marks', 'details', 'contacts', 'addresses', 'courses.classes')->find($user->id);
+
         return $this->respondData($user);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
         // TODO: Need to fix this.
 
@@ -100,24 +74,19 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  User $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
+    public function destroy(User $user): JsonResponse
     {
         $result = $user->delete();
 
         return $this->respondCondition($result, 'user.destroy_failed');
     }
 
-    public function search($criteria, $searchString)
+    public function search(Request $request, $searchString)
     {
-        // $criteria = Last Name First Name
-        if ($criteria == 'name') {
-            return User::where('name', 'LIKE', "%{$searchString}%")->get();
-        }
+        $users = User::where('first_name', 'LIKE', "%{$searchString}%")
+            ->orWhere('last_name', 'LIKE', "%{$searchString}%")
+            ->get();
+
+        return $this->respondData($users);
     }
 }
