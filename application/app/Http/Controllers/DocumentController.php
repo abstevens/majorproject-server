@@ -11,9 +11,26 @@ class DocumentController extends Controller
 {
     public function index(): JsonResponse
     {
-        $documents = scandir(public_path() . '/documents');
+//        $documents = scandir(public_path() . '/documents');
+        $documents = $this->getDirContents(public_path() . '/documents');
 
         return $this->respondData($documents);
+    }
+
+    function getDirContents($dir, &$results = []) {
+
+        $files = scandir($dir);
+
+        foreach($files as $key => $value) {
+            $path = realpath($dir.DIRECTORY_SEPARATOR.$value);
+            if (!is_dir($path)) {
+                $results[$value] = $path;
+            } else if ($value != "." && $value != "..") {
+                $this->getDirContents($path, $results[$value]);
+            }
+        }
+
+        return $results;
     }
 
     /**
