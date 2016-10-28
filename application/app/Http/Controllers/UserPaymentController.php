@@ -8,14 +8,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Payment;
+use App\UserPayment;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\Validation\Validator;
 
-class PaymentController extends Controller
+class UserPaymentController extends Controller
 {
-    public function index(Payment $payment, int $userId): JsonResponse
+    public function index(UserPayment $payment, int $userId): JsonResponse
     {
         // Store all payments data
         $payments = $payment::where('user_id', '=', $userId)->get();
@@ -39,7 +39,7 @@ class PaymentController extends Controller
                 ->withInput();
         } else {
             // Create payment model instance with request
-            $payment = new Payment($request->all());
+            $payment = new UserPayment($request->all());
             $payment->user_id = $userId;
 
             // Save the payment request
@@ -57,7 +57,7 @@ class PaymentController extends Controller
      * @param Payment $payment
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payment)
+    public function show(UserPayment $payment)
     {
         return $this->respondData($payment);
     }
@@ -83,7 +83,7 @@ class PaymentController extends Controller
         $this->respondErrorOnValidationFail($validator);
 
         // Create payment model instance with request
-        $payment = new Payment($request->all());
+        $payment = new UserPayment($request->all());
 
         // Save the payment request
         $result = $payment->save();
@@ -97,7 +97,7 @@ class PaymentController extends Controller
      * @param  Payment $payment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Payment $payment)
+    public function destroy(UserPayment $payment)
     {
         $result = $payment->delete();
 
