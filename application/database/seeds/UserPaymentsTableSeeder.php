@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use \App\User;
-use \App\Payment;
+use \App\UserPayment;
 
-class PaymentsTableSeeder extends Seeder
+class UserPaymentsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,12 +13,12 @@ class PaymentsTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: PaymentsTableSeeder... ";
+        echo "Seeding: UserPaymentsTableSeeder... ";
 
         $users = User::pluck('id');
 
         $users->each(function ($user) {
-            factory(Payment::class, mt_rand(1, 3))->create([
+            factory(UserPayment::class, mt_rand(1, 3))->create([
                 'user_id' => $user,
             ]);
         });

@@ -1,8 +1,8 @@
 <?php
 
-use \App\Payment;
+use \App\UserPayment;
 
-$factory->define(Payment::class, function (Faker\Generator $faker) {
+$factory->define(UserPayment::class, function (Faker\Generator $faker) {
     $createdAt = daylightSavingTimeFix($faker->dateTimeThisYear);
     return [
         'amount' => $faker->randomFloat(2, 50, 20000),
