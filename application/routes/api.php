@@ -71,9 +71,9 @@ Route::model('user-mark', 'App\UserMark');
 Route::resource('user/{userId}/mark', 'UserMarkController', ['except' => ['edit', 'create']]);
 Route::get('user-mark/search/{search_string}', 'UserMarkController@search');
 
-Route::model('user-payment', 'App\Payment');
-Route::resource('user/{userId}/payment', 'PaymentController', ['except' => ['edit', 'create']]);
-Route::get('user-payment/search/{search_string}', 'PaymentController@search');
+Route::model('user-payment', 'App\UserPayment');
+Route::resource('user/{userId}/payment', 'UserPaymentController', ['except' => ['edit', 'create']]);
+Route::get('user-payment/search/{search_string}', 'UserPaymentController@search');
 
 /*
  * Document
