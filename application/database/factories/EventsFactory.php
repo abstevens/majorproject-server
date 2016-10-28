@@ -6,7 +6,7 @@ $factory->define(Event::class, function (Faker\Generator $faker) {
     $createdAt = daylightSavingTimeFix($faker->dateTimeThisYear);
     return [
         'title' => $faker->sentence,
-        'description' => $faker->paragraph,
+        'description' => $faker->text,
         'date_time' => $faker->dateTimeThisMonth,
         'location' => $faker->streetAddress,
         'price' => $faker->randomFloat(2, 0, 100),
