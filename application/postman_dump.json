@@ -72,15 +72,6 @@
 			"owner": "502216"
 		},
 		{
-			"id": "c10c4339-b0ca-8408-1e4f-1f577739822d",
-			"name": "Payments",
-			"description": "",
-			"order": [
-				"c4cf52b5-691a-2914-94de-d90000899c7a"
-			],
-			"owner": "502216"
-		},
-		{
 			"id": "e6075137-fb30-870e-abd8-66a1fa8644ce",
 			"name": "Permissions",
 			"description": "",
@@ -101,6 +92,28 @@
 				"45df77c7-98a4-5bf0-30af-e1d6c410947d"
 			],
 			"owner": "502216"
+		},
+		{
+			"id": "b23fe603-0241-0d8c-c757-f77cc97f06ca",
+			"name": "SchoolAddresses",
+			"description": "",
+			"order": [
+				"12be2654-30a4-c269-e6d6-9da088439f13",
+				"d0d7906b-89fe-77a9-6bab-3bfee96f144a"
+			],
+			"owner": "502216",
+			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c"
+		},
+		{
+			"id": "e5305e0a-df11-7e42-ec65-851251853b25",
+			"name": "SchoolContacts",
+			"description": "",
+			"order": [
+				"37053bf2-44b0-f98c-bc23-da2d1076a7c8",
+				"44ec7ab2-3e0a-bd35-6746-e9ed13baabe8"
+			],
+			"owner": "502216",
+			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c"
 		},
 		{
 			"id": "9616eb2f-1b42-131b-6822-af18a1a194c5",
@@ -157,6 +170,16 @@
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c"
 		},
 		{
+			"id": "c10c4339-b0ca-8408-1e4f-1f577739822d",
+			"name": "UserPayments",
+			"description": "",
+			"order": [
+				"c4cf52b5-691a-2914-94de-d90000899c7a"
+			],
+			"owner": "502216",
+			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c"
+		},
+		{
 			"id": "e63e0a4a-59e1-cbdd-075b-16007f988a66",
 			"name": "Users",
 			"description": "",
@@ -167,7 +190,9 @@
 				"c97c4b02-b13a-a82c-ec72-bb29a4cb2158",
 				"2b84ed1d-dc6e-0c7f-5537-ab12852db666",
 				"627215de-5288-eea4-ea64-4f4d955bdd31",
-				"23e0f4f1-9625-4791-76f4-89d4bc332e96"
+				"23e0f4f1-9625-4791-76f4-89d4bc332e96",
+				"2a73d822-993d-2f35-51de-8ad4ab88abf5",
+				"16206c5f-a8e9-7d0a-1b13-1696c1fe26ea"
 			],
 			"owner": "502216",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c"
@@ -198,7 +223,7 @@
 		},
 		{
 			"id": "0ce4b408-3866-60d7-7fb9-2406349da97e",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/course/{{COURSE_ID}}",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -209,16 +234,15 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468776264370,
+			"time": 1477501768504,
 			"name": "Show",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
-			"responses": [],
-			"folder": "9971e487-4fe1-81fb-e8f0-58b305a1fcf1"
+			"responses": []
 		},
 		{
 			"id": "0fac040f-dcc2-e879-36b9-5973f0783c2b",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/permission/{{PERMISSION_ID}}",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -229,8 +253,27 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468776331432,
+			"time": 1477501839051,
 			"name": "Show",
+			"description": "",
+			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
+			"responses": []
+		},
+		{
+			"id": "12be2654-30a4-c269-e6d6-9da088439f13",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
+			"url": "{{URL}}/school/3/address",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    // var jsonData = JSON.parse(responseBody);\n    \n    // tests[\"Body contains id\"] = jsonData['data'][0]['id'];\n    // tests[\"Body contains first_name\"] = jsonData['data'][0]['first_name'];\n    // tests[\"Body contains last_name\"] = jsonData['data'][0]['last_name'];\n    // tests[\"Body contains username\"] = jsonData['data'][0]['username'];\n    // tests[\"Body contains email\"] = jsonData['data'][0]['email'];\n    // tests[\"Body contains created_at\"] = jsonData['data'][0]['created_at'];\n    // tests[\"Body contains updated_at\"] = jsonData['data'][0]['updated_at'];\n    \n    // postman.setGlobalVariable(\"FIRST_USER_ID\", jsonData['data'][0]['id']);\n    // postman.setGlobalVariable(\"FIRST_USER_FIRST_NAME\", jsonData['data'][0]['first_name']);\n    // postman.setGlobalVariable(\"FIRST_USER_LAST_NAME\", jsonData['data'][0]['last_name']);\n    // postman.setGlobalVariable(\"FIRST_USER_USERNAME\", jsonData['data'][0]['username']);\n    // postman.setGlobalVariable(\"FIRST_USER_EMAIL\", jsonData['data'][0]['email']);\n    // postman.setGlobalVariable(\"FIRST_USER_CREATED_AT\", jsonData['data'][0]['created_at']);\n    // postman.setGlobalVariable(\"FIRST_USER_UPDATED_AT\", jsonData['data'][0]['updated_at']);\n} catch(e) {\n\n}\n\n// tests[\"More than one user\"] = jsonData['data'].length > 1;\n\n// tests[\"Users shown successfully\"] = jsonData['status'] === 1;\n\n// tests[\"No errors in json\"] = !jsonData.hasOwnProperty('error');",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1477831524668,
+			"name": "Index",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
 			"responses": []
@@ -255,6 +298,25 @@
 			"responses": []
 		},
 		{
+			"id": "16206c5f-a8e9-7d0a-1b13-1696c1fe26ea",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
+			"url": "{{URL}}/admin/user",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    var jsonData = JSON.parse(responseBody);\n    \n    tests[\"Body contains id\"] = jsonData['data'][0]['id'];\n    tests[\"Body contains first_name\"] = jsonData['data'][0]['first_name'];\n    tests[\"Body contains last_name\"] = jsonData['data'][0]['last_name'];\n    tests[\"Body contains username\"] = jsonData['data'][0]['username'];\n    tests[\"Body contains email\"] = jsonData['data'][0]['email'];\n    tests[\"Body contains created_at\"] = jsonData['data'][0]['created_at'];\n    tests[\"Body contains updated_at\"] = jsonData['data'][0]['updated_at'];\n    \n    postman.setGlobalVariable(\"FIRST_USER_ID\", jsonData['data'][0]['id']);\n    postman.setGlobalVariable(\"FIRST_USER_FIRST_NAME\", jsonData['data'][0]['first_name']);\n    postman.setGlobalVariable(\"FIRST_USER_LAST_NAME\", jsonData['data'][0]['last_name']);\n    postman.setGlobalVariable(\"FIRST_USER_USERNAME\", jsonData['data'][0]['username']);\n    postman.setGlobalVariable(\"FIRST_USER_EMAIL\", jsonData['data'][0]['email']);\n    postman.setGlobalVariable(\"FIRST_USER_CREATED_AT\", jsonData['data'][0]['created_at']);\n    postman.setGlobalVariable(\"FIRST_USER_UPDATED_AT\", jsonData['data'][0]['updated_at']);\n} catch(e) {\n\n}\n\ntests[\"More than one user\"] = jsonData['data'].length > 1;\n\ntests[\"Users shown successfully\"] = jsonData['status'] === 1;\n\ntests[\"No errors in json\"] = !jsonData.hasOwnProperty('error');",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1477747877621,
+			"name": "Admin Index",
+			"description": "",
+			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
+			"responses": []
+		},
+		{
 			"id": "18653e44-5fee-5d65-d9ca-ea7d2ba0bf43",
 			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/course",
@@ -274,7 +336,7 @@
 		},
 		{
 			"id": "19f96d16-ea99-c1c0-010a-639ae875fbac",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/award/{{AWARD_ID}}",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -285,7 +347,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468776293115,
+			"time": 1477501719770,
 			"name": "Show",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -312,7 +374,7 @@
 		},
 		{
 			"id": "1aa35747-8807-0c1e-28c9-da5c6adb0b55",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/event/32",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -322,7 +384,7 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\n\ntests[\"Event deleted successfully\"] = jsonData['status'] === 1;",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468879032228,
+			"time": 1477501821696,
 			"name": "Destroy",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -331,7 +393,7 @@
 		},
 		{
 			"id": "1b92cf46-3ba9-11a4-7ce2-79f6ce0fc5ff",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/role/{{ROLE_ID}}",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -342,7 +404,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468776338891,
+			"time": 1477486481193,
 			"name": "Show",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -361,12 +423,12 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    var jsonData = JSON.parse(responseBody);\n    \n    tests[\"Body contains Access Token\"] = jsonData['access_token'];\n    //tests[\"Body contains first_name\"] = jsonData['data'][0]['first_name'];\n    //tests[\"Body contains last_name\"] = jsonData['data'][0]['last_name'];\n    //tests[\"Body contains username\"] = jsonData['data'][0]['username'];\n    //tests[\"Body contains email\"] = jsonData['data'][0]['email'];\n    //tests[\"Body contains created_at\"] = jsonData['data'][0]['created_at'];\n    //tests[\"Body contains updated_at\"] = jsonData['data'][0]['updated_at'];\n    \n    postman.setGlobalVariable(\"AUTH_TOKEN\", jsonData['access_token']);\n    //postman.setGlobalVariable(\"FIRST_USER_FIRST_NAME\", jsonData['data'][0]['first_name']);\n    //postman.setGlobalVariable(\"FIRST_USER_LAST_NAME\", jsonData['data'][0]['last_name']);\n    //postman.setGlobalVariable(\"FIRST_USER_USERNAME\", jsonData['data'][0]['username']);\n    //postman.setGlobalVariable(\"FIRST_USER_EMAIL\", jsonData['data'][0]['email']);\n    //postman.setGlobalVariable(\"FIRST_USER_CREATED_AT\", jsonData['data'][0]['created_at']);\n    //postman.setGlobalVariable(\"FIRST_USER_UPDATED_AT\", jsonData['data'][0]['updated_at']);\n} catch(e) {\n\n}\n\n//tests[\"More than one user\"] = jsonData['data'].length > 1;\n\n//tests[\"Users shown successfully\"] = jsonData['status'] === 1;\n\n//tests[\"No errors in json\"] = !jsonData.hasOwnProperty('error');",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1477309197818,
+			"time": 1477833524970,
 			"name": "Auth: Get Token",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
 			"responses": [],
-			"rawModeData": "{\n\t\"grant_type\": \"password\",\n\t\"client_id\": 2,\n\t\"client_secret\": \"KyHacYa2Q7DCTVLaDe1RSnvTlTI20CrmYb7FXujb\",\n\t\"username\": \"user1@test.com\",\n\t\"password\": \"1111\",\n\t\"scope\": \"*\"\n}"
+			"rawModeData": "{\n\t\"grant_type\": \"password\",\n\t\"client_id\": 2,\n\t\"client_secret\": \"KyHacYa2Q7DCTVLaDe1RSnvTlTI20CrmYb7FXujb\",\n\t\"username\": \"admin1@test.com\",\n\t\"password\": \"1111\",\n\t\"scope\": \"*\"\n}"
 		},
 		{
 			"id": "23e0f4f1-9625-4791-76f4-89d4bc332e96",
@@ -388,8 +450,26 @@
 			"responses": []
 		},
 		{
+			"id": "2a73d822-993d-2f35-51de-8ad4ab88abf5",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
+			"url": "{{URL}}/user/3",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\n\ntests[\"First user id shown successfully\"] = jsonData['data']['id'] === globals.FIRST_USER_ID;\ntests[\"First user first_name shown successfully\"] = jsonData['data']['first_name'] === globals.FIRST_USER_FIRST_NAME;\ntests[\"First user last_name shown successfully\"] = jsonData['data']['last_name'] === globals.FIRST_USER_LAST_NAME;\ntests[\"First user username shown successfully\"] = jsonData['data']['username'] === globals.STORE_USERNAME;\ntests[\"First user email shown successfully\"] = jsonData['data']['email'] === globals.FIRST_USER_EMAIL;\ntests[\"First user created_at shown successfully\"] = jsonData['data']['created_at'] === globals.FIRST_USER_CREATED_AT;\ntests[\"First user updated_at shown successfully\"] = jsonData['data']['updated_at'] === globals.FIRST_USER_UPDATED_AT;\n\ntests[\"User shown successfully\"] = jsonData['status'] === 1;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1477759537493,
+			"name": "Show a newly created record (from Store) copy",
+			"description": "",
+			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
+			"responses": []
+		},
+		{
 			"id": "2b84ed1d-dc6e-0c7f-5537-ab12852db666",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/user/{{USER_ID}}",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -399,7 +479,7 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\n\ntests[\"First user id shown successfully\"] = jsonData['data']['id'] === globals.FIRST_USER_ID;\ntests[\"First user first_name shown successfully\"] = jsonData['data']['first_name'] === globals.FIRST_USER_FIRST_NAME;\ntests[\"First user last_name shown successfully\"] = jsonData['data']['last_name'] === globals.FIRST_USER_LAST_NAME;\ntests[\"First user username shown successfully\"] = jsonData['data']['username'] === globals.STORE_USERNAME;\ntests[\"First user email shown successfully\"] = jsonData['data']['email'] === globals.FIRST_USER_EMAIL;\ntests[\"First user created_at shown successfully\"] = jsonData['data']['created_at'] === globals.FIRST_USER_CREATED_AT;\ntests[\"First user updated_at shown successfully\"] = jsonData['data']['updated_at'] === globals.FIRST_USER_UPDATED_AT;\n\ntests[\"User shown successfully\"] = jsonData['status'] === 1;",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1475326447909,
+			"time": 1477501873050,
 			"name": "Show a newly created record (from Store)",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -407,7 +487,7 @@
 		},
 		{
 			"id": "2e0ec7b0-fa4b-4529-327a-1f73034d81bd",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/news",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -417,7 +497,26 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    var jsonData = JSON.parse(responseBody);\n    postman.setGlobalVariable(\"NEWS_ID\", jsonData[0].id);\n} catch(e) {\n\n}",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468776301305,
+			"time": 1477486505055,
+			"name": "Index",
+			"description": "",
+			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
+			"responses": []
+		},
+		{
+			"id": "37053bf2-44b0-f98c-bc23-da2d1076a7c8",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
+			"url": "{{URL}}/school/3/contact",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    // var jsonData = JSON.parse(responseBody);\n    \n    // tests[\"Body contains id\"] = jsonData['data'][0]['id'];\n    // tests[\"Body contains first_name\"] = jsonData['data'][0]['first_name'];\n    // tests[\"Body contains last_name\"] = jsonData['data'][0]['last_name'];\n    // tests[\"Body contains username\"] = jsonData['data'][0]['username'];\n    // tests[\"Body contains email\"] = jsonData['data'][0]['email'];\n    // tests[\"Body contains created_at\"] = jsonData['data'][0]['created_at'];\n    // tests[\"Body contains updated_at\"] = jsonData['data'][0]['updated_at'];\n    \n    // postman.setGlobalVariable(\"FIRST_USER_ID\", jsonData['data'][0]['id']);\n    // postman.setGlobalVariable(\"FIRST_USER_FIRST_NAME\", jsonData['data'][0]['first_name']);\n    // postman.setGlobalVariable(\"FIRST_USER_LAST_NAME\", jsonData['data'][0]['last_name']);\n    // postman.setGlobalVariable(\"FIRST_USER_USERNAME\", jsonData['data'][0]['username']);\n    // postman.setGlobalVariable(\"FIRST_USER_EMAIL\", jsonData['data'][0]['email']);\n    // postman.setGlobalVariable(\"FIRST_USER_CREATED_AT\", jsonData['data'][0]['created_at']);\n    // postman.setGlobalVariable(\"FIRST_USER_UPDATED_AT\", jsonData['data'][0]['updated_at']);\n} catch(e) {\n\n}\n\n// tests[\"More than one user\"] = jsonData['data'].length > 1;\n\n// tests[\"Users shown successfully\"] = jsonData['status'] === 1;\n\n// tests[\"No errors in json\"] = !jsonData.hasOwnProperty('error');",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1477831908100,
 			"name": "Index",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -438,6 +537,25 @@
 			"helperAttributes": {},
 			"time": 1477259717841,
 			"name": "Index",
+			"description": "",
+			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
+			"responses": []
+		},
+		{
+			"id": "44ec7ab2-3e0a-bd35-6746-e9ed13baabe8",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
+			"url": "{{URL}}/school-contact/search/.com",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    // var jsonData = JSON.parse(responseBody);\n    // postman.setGlobalVariable(\"USER_ID\", jsonData[0].id);\n} catch(e) {\n\n}\n\n// tests[\"Users shown successfully\"] = jsonData['status'] === 1;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1477831943116,
+			"name": "Search",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
 			"responses": []
@@ -492,7 +610,7 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    // var jsonData = JSON.parse(responseBody);\n    \n    // tests[\"Body contains id\"] = jsonData['data'][0]['id'];\n    // tests[\"Body contains first_name\"] = jsonData['data'][0]['first_name'];\n    // tests[\"Body contains last_name\"] = jsonData['data'][0]['last_name'];\n    // tests[\"Body contains username\"] = jsonData['data'][0]['username'];\n    // tests[\"Body contains email\"] = jsonData['data'][0]['email'];\n    // tests[\"Body contains created_at\"] = jsonData['data'][0]['created_at'];\n    // tests[\"Body contains updated_at\"] = jsonData['data'][0]['updated_at'];\n    \n    // postman.setGlobalVariable(\"FIRST_USER_ID\", jsonData['data'][0]['id']);\n    // postman.setGlobalVariable(\"FIRST_USER_FIRST_NAME\", jsonData['data'][0]['first_name']);\n    // postman.setGlobalVariable(\"FIRST_USER_LAST_NAME\", jsonData['data'][0]['last_name']);\n    // postman.setGlobalVariable(\"FIRST_USER_USERNAME\", jsonData['data'][0]['username']);\n    // postman.setGlobalVariable(\"FIRST_USER_EMAIL\", jsonData['data'][0]['email']);\n    // postman.setGlobalVariable(\"FIRST_USER_CREATED_AT\", jsonData['data'][0]['created_at']);\n    // postman.setGlobalVariable(\"FIRST_USER_UPDATED_AT\", jsonData['data'][0]['updated_at']);\n} catch(e) {\n\n}\n\n// tests[\"More than one user\"] = jsonData['data'].length > 1;\n\n// tests[\"Users shown successfully\"] = jsonData['status'] === 1;\n\n// tests[\"No errors in json\"] = !jsonData.hasOwnProperty('error');",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1477260138394,
+			"time": 1477832131924,
 			"name": "Index",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -500,7 +618,7 @@
 		},
 		{
 			"id": "5a4f6c64-03d0-a132-f088-b6c87c1c2e51",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/award",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -510,7 +628,7 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    var jsonData = JSON.parse(responseBody);\n    postman.setGlobalVariable(\"AWARD_ID\", jsonData[0].id);\n} catch(e) {\n\n}",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468776286061,
+			"time": 1477501713713,
 			"name": "Index",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -547,12 +665,12 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\n\ntests[\"User updated successfully\"] = jsonData['status'] === 1;",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1477224572722,
+			"time": 1477746798411,
 			"name": "Update",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
 			"responses": [],
-			"rawModeData": "{\n    \"username\": \"Test2\",\n    \"email\": \"test2@test.com\",\n    \"password\": \"test2\"\n}"
+			"rawModeData": "{\n    \"email\": \"test2@test.com\",\n    \"password\": \"test2\"\n}"
 		},
 		{
 			"id": "68f1a98e-e6d9-0929-bcd2-de1b3d568c52",
@@ -575,7 +693,7 @@
 		},
 		{
 			"id": "717224bd-966c-3483-8bac-1a5a1519edfe",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/school/{{SCHOOL_ID}}",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -585,7 +703,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468776361106,
+			"time": 1477486142045,
 			"name": "Show",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -612,7 +730,7 @@
 		},
 		{
 			"id": "7baf0c94-019f-2fc8-3862-13411b71b5da",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/event/{{EVENT_ID}}",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -622,7 +740,7 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\n\ntests[\"Event shown successfully\"] = jsonData['status'] === 1;",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468871780695,
+			"time": 1477501800974,
 			"name": "Show",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -649,7 +767,7 @@
 		},
 		{
 			"id": "85f90e63-4a0c-f418-b91c-2ab0b1643c22",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/event/{{EVENT_ID}}",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -659,7 +777,7 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\n\ntests[\"Event updated successfully\"] = jsonData['status'] === 1;",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468786922027,
+			"time": 1477501824349,
 			"name": "Update",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -668,7 +786,7 @@
 		},
 		{
 			"id": "8c861a4f-0e9b-afd7-5c66-c83457c33ede",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/school",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -678,12 +796,11 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    var jsonData = JSON.parse(responseBody);\n    postman.setGlobalVariable(\"SCHOOL_ID\", jsonData[0].id);\n} catch(e) {\n\n}\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1460894002281,
+			"time": 1477486028701,
 			"name": "Index",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
-			"responses": [],
-			"folder": "9616eb2f-1b42-131b-6822-af18a1a194c5"
+			"responses": []
 		},
 		{
 			"id": "9436ed3f-2b86-2652-47c8-1510351d8c29",
@@ -706,7 +823,7 @@
 		},
 		{
 			"id": "9a01a105-b884-8d04-e27b-19a5613549d4",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/course/{{COURSE_ID}}",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -717,7 +834,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468776264370,
+			"time": 1477501782423,
 			"name": "Show",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -754,16 +871,15 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    var jsonData = JSON.parse(responseBody);\n    postman.setGlobalVariable(\"COURSE_ID\", jsonData[0].id);\n} catch(e) {\n\n}\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1477257478147,
+			"time": 1477501760676,
 			"name": "Index",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
-			"responses": [],
-			"folder": "9971e487-4fe1-81fb-e8f0-58b305a1fcf1"
+			"responses": []
 		},
 		{
 			"id": "abce0195-da5f-7799-4a72-41ea13cef535",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/event",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -773,7 +889,7 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\n\ntests[\"Event created successfully\"] = jsonData['status'] === 1;",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1470426931483,
+			"time": 1477501797318,
 			"name": "Store",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -782,7 +898,7 @@
 		},
 		{
 			"id": "ac1cadc1-9e47-9c4f-ef7d-40b6d4177daf",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/event",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -792,7 +908,7 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    var jsonData = JSON.parse(responseBody);\n    postman.setGlobalVariable(\"EVENT_ID\", jsonData[0].id);\n} catch(e) {\n\n}\n\ntests[\"Events shown successfully\"] = jsonData['status'] === 1;",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468777097100,
+			"time": 1477501792818,
 			"name": "Index",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -800,7 +916,7 @@
 		},
 		{
 			"id": "b3a30172-fc68-e515-7276-b1ba59695203",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/permission",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -811,7 +927,7 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    var jsonData = JSON.parse(responseBody);\n    postman.setGlobalVariable(\"PERMISSION_ID\", jsonData[0].id);\n} catch(e) {\n\n}",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468776315772,
+			"time": 1477501835007,
 			"name": "Index",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
@@ -859,7 +975,7 @@
 			"id": "c97c4b02-b13a-a82c-ec72-bb29a4cb2158",
 			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/user",
-			"preRequestScript": "var timestamp = Date.now();\n\npostman.setGlobalVariable(\"STORE_USERNAME\", \"test\" + timestamp + \"@test.com\");",
+			"preRequestScript": "var timestamp = Date.now();\n\npostman.setGlobalVariable(\"STORE_USERNAME\", \"test\" + timestamp + \"@test.com\");\npostman.setGlobalVariable(\"STORE_TIMESTAMP\", timestamp);",
 			"pathVariables": {},
 			"method": "POST",
 			"data": [],
@@ -868,12 +984,31 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\n\ntests[\"User created successfully\"] = jsonData['status'] === 1;\n\npostman.setGlobalVariable(\"USER_ID\", jsonData['data']);",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1477155638006,
+			"time": 1477746755758,
 			"name": "Store",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
 			"responses": [],
-			"rawModeData": "{\n\t\"first_name\": \"Test\",\n\t\"last_name\": \"Test\",\n    \"username\": \"{{STORE_USERNAME}}\",\n    \"email\": \"test{{STORE_TIMESTAMP}}@test.com\",\n    \"password\": \"test\"\n}"
+			"rawModeData": "{\n\t\"first_name\": \"Test\",\n\t\"last_name\": \"Test\",\n    \"email\": \"test{{STORE_TIMESTAMP}}@test.com\",\n    \"password\": \"test\",\n    \"date_of_birth\": \"1880-12-20\"\n}"
+		},
+		{
+			"id": "d0d7906b-89fe-77a9-6bab-3bfee96f144a",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
+			"url": "{{URL}}/school-address/search/Le",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    // var jsonData = JSON.parse(responseBody);\n    // postman.setGlobalVariable(\"USER_ID\", jsonData[0].id);\n} catch(e) {\n\n}\n\n// tests[\"Users shown successfully\"] = jsonData['status'] === 1;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1477831550335,
+			"name": "Search",
+			"description": "",
+			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
+			"responses": []
 		},
 		{
 			"id": "d3ce466b-e16e-143c-e3ed-31f5f7959d17",
@@ -896,7 +1031,7 @@
 		},
 		{
 			"id": "d3f40eaf-6382-51e6-3034-04e0658371a1",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/role",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -906,12 +1041,11 @@
 			"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\ntry {\n    var jsonData = JSON.parse(responseBody);\n    postman.setGlobalVariable(\"ROLE_ID\", jsonData[0].id);\n} catch(e) {\n\n}",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1460881975024,
+			"time": 1477486408745,
 			"name": "Index",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
-			"responses": [],
-			"folder": "7bbb1900-4e50-3e23-46fc-9338b675c62f"
+			"responses": []
 		},
 		{
 			"id": "d713d3bd-dc0b-28ca-3de6-52dd3f57d468",
@@ -934,7 +1068,7 @@
 		},
 		{
 			"id": "dc3a9566-526a-8ea6-c600-3b3e9f1d5cc2",
-			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{AUTH_TOKEN}}\n",
 			"url": "{{URL}}/news/{{NEWS_ID}}",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -944,7 +1078,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1468776307907,
+			"time": 1477486511631,
 			"name": "Show",
 			"description": "",
 			"collectionId": "22e03cfd-6c4e-ee4b-0405-59b50ae14b5c",
