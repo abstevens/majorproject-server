@@ -11,6 +11,10 @@ class School extends Model
 
     protected $fillable = ['name', 'date'];
 
+    protected $hidden = [
+        'created_at', 'updated_at', 'deleted_at',
+    ];
+
     /**
      * @param string $name
      * @return bool
@@ -40,6 +44,16 @@ class School extends Model
     public function users()
     {
         return $this->belongsToMany('App\User');
+    }
+
+    public function addresses()
+    {
+        return $this->hasOne('App\SchoolAddress');
+    }
+
+    public function contacts()
+    {
+        return $this->hasMany('App\SchoolContact');
     }
 
     public function courses()
