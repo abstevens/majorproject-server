@@ -12,6 +12,16 @@
 
 //Route::auth();
 
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
+//    Route::model('course', 'App\Course');
+//    Route::resource('course', 'CourseController', ['except' => ['edit', 'create']]);
+//    Route::get('course/search/{search_string}', 'CourseController@search');
+
+    Route::model('user', 'App\User');
+    Route::resource('user', 'UserController', ['except' => ['edit', 'create']]);
+    Route::get('user/search/{search_string}', 'UserController@search');
+});
+
 Route::get('/home', 'HomeController@index');
 
 Route::model('course', 'App\Course');
@@ -47,6 +57,14 @@ Route::get('role/search/{search_string}', 'RoleController@search');
 Route::model('school', 'App\School');
 Route::resource('school', 'SchoolController', ['except' => ['edit', 'create']]);
 Route::get('school/search/{search_string}', 'SchoolController@search');
+
+Route::model('school-address', 'App\SchoolAddress');
+Route::resource('school/{schoolId}/address', 'SchoolAddressController', ['except' => ['edit', 'create']]);
+Route::get('school-address/search/{search_string}', 'SchoolAddressController@search');
+
+Route::model('school-contact', 'App\SchoolContact');
+Route::resource('school/{schoolId}/contact', 'SchoolContactController', ['except' => ['edit', 'create']]);
+Route::get('school-contact/search/{search_string}', 'SchoolContactController@search');
 
 /*
  * User
