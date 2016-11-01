@@ -24,7 +24,7 @@ There is a full guide on installing the server via Vagrant in the `/documents/ge
 - Direct to majorproject-server/application root directory on your machine: `cd *YOUR DIRECTORY*/majorproject-server/application`
 - If you have not updated composer in a while, it is recommended to with: `composer update && composer install`
 - There is a custom command setup to create only the database tables: `php artisan install`
-- To fill the tables with fake data simply run `php artisan install --seed`
+- To create the tables  and fill them with fake data simply run `php artisan install --seed`
 
 If you would like to recreate the database tables with fake data, it is recommended to download Sequel Pro (https://www.sequelpro.com/). To
 connect to the database, use `127.0.0.1` as Host, `root` as Username and `majorproject` as Database.
