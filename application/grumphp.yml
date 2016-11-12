@@ -1,0 +1,10 @@
+parameters:
+    git_dir: ../
+    bin_dir: vendor/bin
+    tasks:
+        phpcs:
+            standard: 'PSR2'
+            ignore_patterns: ['vendor', 'tests', 'storage', 'resources', 'database', 'bootstrap']
+
+        phpunit:
+            always_execute: false
