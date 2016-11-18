@@ -9,8 +9,12 @@ class Course extends Model
     /**
      * Enable the file listing of related uploaded files
      */
-    use \App\Traits\Files;
+    use Traits\Files;
     protected $appends = ['files'];
+
+    protected $hidden = [
+        'created_at', 'pivot', 'updated_at', 'deleted_at',
+    ];
 
     public function users()
     {

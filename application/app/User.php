@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'username', 'email', 'password',
+        'first_name', 'last_name', 'username', 'email', 'password', 'date_of_birth'
     ];
 
     /**
@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'created_at', 'deleted_at', 'updated_at'
+        'password', 'remember_token', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     /**
@@ -64,6 +64,11 @@ class User extends Authenticatable
         return $this->hasOne('App\UserAddress');
     }
 
+    public function payments()
+    {
+        return $this->hasOne('App\UserPayment');
+    }
+
     public function events()
     {
         return $this->hasMany('App\Event');
@@ -92,11 +97,6 @@ class User extends Authenticatable
     public function news()
     {
         return $this->hasMany('App\News');
-    }
-
-    public function payments()
-    {
-        return $this->hasOne('App\Payment');
     }
 
     public function roles()

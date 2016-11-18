@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventAttendance extends Model
 {
+    protected $hidden = [
+        'created_at', 'updated_at', 'deleted_at',
+    ];
+
     public function users()
     {
         return $this->belongsToMany('App\User');

@@ -8,6 +8,10 @@ class SchoolCourse extends Model
 {
     protected $table = 'school_course';
 
+    protected $hidden = [
+        'created_at', 'updated_at', 'deleted_at',
+    ];
+
     public function schools()
     {
         return $this->belongsToMany('App\School');
