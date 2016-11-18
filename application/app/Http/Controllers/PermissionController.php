@@ -3,115 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Permission;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 
 class PermissionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Permission $permission
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Permission $permission)
+    public function index(Permission $permission): JsonResponse
     {
-        // Store all permissions data
         $permissions = $permission::all();
 
-        // Return permissions data
         return $this->respondData($permissions);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        // Set validation rules
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'code' => 'required|integer|max:6',
+            'code' => 'integer|max:6',
         ]);
 
-        // Validate permissions request
-        if ($validator->fails()) {
-            return redirect('permission/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create permission model instance with request
-            $permission = new Permission($request->all());
+        $this->respondErrorOnValidationFail($validator);
 
-            // Save the permission request
-            $result = $permission->save();
+        $permission = new Permission($request->all());
 
-            return $this->respondCondition($result, 'permission.store_failed');
-        }
+        $result = $permission->save();
+
+        return $this->respondCondition($result, $permission->id, 'permission.store_failed');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * TODO: perform id validation!!
-     *
-     * @param  Permission $permission
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Permission $permission)
+    public function show(Permission $permission): JsonResponse
     {
         return $this->respondData($permission);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $permissionId): JsonResponse
     {
-        // TODO: Need to fix this.
-
-        // Set validation rules
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'code' => 'required|integer|max:6',
+            'code' => 'integer|max:6',
         ]);
 
-        if ($validator->fails()) {
-            return redirect('permission/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create permission model instance with request
-            $permission = new Permission($request->all());
+        $this->respondErrorOnValidationFail($validator);
 
-            // Save the permission request
-            $result = $permission->save();
+        $permission = new Permission($request->all());
 
-            return $this->respondCondition($result, 'permission.update_failed');
-        }
+        $result = $permission->save();
+
+        return $this->respondCondition($result, $permissionId, 'permission.update_failed');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  Permission $permission
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Permission $permission)
+    public function destroy(Permission $permission): JsonResponse
     {
         $result = $permission->delete();
 
-        return $this->respondCondition($result, 'permission.destroy_failed');
+        return $this->respondCondition($result, $permission->id, 'permission.destroy_failed');
     }
 
-    public function search(Request $request, $searchString)
+    public function search(Request $request, $searchString): JsonResponse
     {
         $permissions = Permission::where('name', 'LIKE', "%{$searchString}%")
             ->orWhere('code', 'LIKE', "%{$searchString}%")

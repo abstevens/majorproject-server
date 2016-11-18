@@ -1,115 +1,70 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: AlexStevens
- * Date: 22/08/16
- * Time: 21:57
- */
 
 namespace App\Http\Controllers;
 
 use App\UserContact;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 
 class UserContactController extends Controller
 {
-    public function index(UserContact $contact, int $userId): JsonResponse
+    public function index(UserContact $contact): JsonResponse
     {
-        // Store all contacts data in $users
-        $contacts = $contact::where('user_id', '=', $userId)->get();
 
-        return $this->respondData($contacts);
     }
 
     public function store(Request $request): JsonResponse
     {
-        // Set validation rules
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
-            'type' => 'required|string|max:255',
-            'value' => 'required|string|max:255',
+            'type' => 'string|max:255',
+            'value' => 'string|max:255',
         ]);
 
-        // Validate contact request
-        if ($validator->fails()) {
-            return redirect('contact/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create contact model instance with request
-            $contact = new UserContact($request->all());
+        $this->respondErrorOnValidationFail($validator);
 
-            // Save the contact request
-            $result = $contact->save();
+        $contact = new UserContact($request->all());
 
-            return $this->respondCondition($result, 'contact.store_failed');
-        }
+        $result = $contact->save();
+
+        return $this->respondCondition($result, $contact->id, 'user_contact.store_failed');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * TODO: perform id validation!!
-     *
-     * @param UserContact $contact
-     * @return \Illuminate\Http\Response
-     */
-    public function show(UserContact $contact)
+    public function show(UserContact $contact): JsonResponse
     {
-        return $this->respondData($contact);
+        $contacts = $contact::where('user_id', '=', $contact->id)->get();
+
+        return $this->respondData($contacts);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $contactId): JsonResponse
     {
-        // TODO: Need to fix this.
-
-        // Set validation rules
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
-            'type' => 'required|string|max:255',
-            'value' => 'required|string|max:255',
+            'type' => 'string|max:255',
+            'value' => 'string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return redirect('contact/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create contact model instance with request
-            $contact = new UserContact($request->all());
+        $this->respondErrorOnValidationFail($validator);
 
-            // Save the contact request
-            $result = $contact->save();
+        $contact = new UserContact($request->all());
 
-            return $this->respondCondition($result, 'contact.update_failed');
-        }
+        $result = $contact->save();
+
+        return $this->respondCondition($result, $contactId, 'user_contact.update_failed');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  UserContact $contact
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(UserContact $contact)
+    public function destroy(UserContact $contact): JsonResponse
     {
         $result = $contact->delete();
 
-        return $this->respondCondition($result, 'contact.destroy_failed');
+        return $this->respondCondition($result, $contact->id, 'user_contact.destroy_failed');
     }
 
-    public function search(Request $request, $searchString)
+    public function search(Request $request, $searchString): JsonResponse
     {
-        $contacts = UserContact::where('value', 'LIKE', "%{$searchString}%")
+        $contacts = UserContact::where('type', 'LIKE', "%{$searchString}%")
             ->get();
 
         return $this->respondData($contacts);

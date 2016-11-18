@@ -3,115 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Course $course
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Course $course)
+    public function index(Course $course): JsonResponse
     {
-        // Store all addresses data in $users
         $courses = $course::all();
 
-        // Return addresses data
         return $this->respondData($courses);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        // Set validation rules
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'code' => 'int|max:255',
         ]);
 
-        // Validate courses request
-        if ($validator->fails()) {
-            return redirect('course/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create course model instance with request
-            $course = new Course($request->all());
+        $this->respondErrorOnValidationFail($validator);
 
-            // Save the course request
-            $result = $course->save();
+        $course = new Course($request->all());
 
-            return $this->respondCondition($result, 'course.store_failed');
-        }
+        $result = $course->save();
+
+        return $this->respondCondition($result, $course->id, 'course.store_failed');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * TODO: perform id validation!!
-     *
-     * @param  Course $course
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Course $course)
+    public function show(Course $course): JsonResponse
     {
         return $this->respondData($course);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $courseId): JsonResponse
     {
-        // TODO: Need to fix this.
-
-        // Set validation rules
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'code' => 'int|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return redirect('address/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create course model instance with request
-            $address = new Course($request->all());
+        $this->respondErrorOnValidationFail($validator);
 
-            // Save the course request
-            $result = $address->save();
+        $address = new Course($request->all());
 
-            return $this->respondCondition($result, 'course.update_failed');
-        }
+        $result = $address->save();
+
+        return $this->respondCondition($result, $courseId, 'course.update_failed');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  Course $course
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Course $course)
+    public function destroy(Course $course): JsonResponse
     {
         $result = $course->delete();
 
-        return $this->respondCondition($result, 'address.destroy_failed');
+        return $this->respondCondition($result, $course->id, 'course.destroy_failed');
     }
 
-    public function search(Request $request, $searchString)
+    public function search(Request $request, $searchString): JsonResponse
     {
         $courses = Course::where('name', 'LIKE', "%{$searchString}%")
             ->orWhere('code', 'LIKE', "%{$searchString}%")

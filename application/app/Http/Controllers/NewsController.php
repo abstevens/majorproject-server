@@ -3,117 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\News;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 
 class NewsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param News $news
-     * @return \Illuminate\Http\Response
-     */
-    public function index(News $news)
+    public function index(News $news): JsonResponse
     {
-        // Store all news data
         $news = $news::all();
 
-        // Return addresses data
         return $this->respondData($news);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        // Set validation rules
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'string|max:255',
         ]);
 
-        // Validate news request
-        if ($validator->fails()) {
-            return redirect('news/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create news model instance with request
-            $news = new News($request->all());
+        $this->respondErrorOnValidationFail($validator);
 
-            // Save the news request
-            $result = $news->save();
+        $news = new News($request->all());
 
-            return $this->respondCondition($result, 'news.store_failed');
-        }
+        $result = $news->save();
+
+        return $this->respondCondition($result, $news->id, 'news.store_failed');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * TODO: perform id validation!!
-     *
-     * @param  News $news
-     * @return \Illuminate\Http\Response
-     */
-    public function show(News $news)
+    public function show(News $news): JsonResponse
     {
         return $this->respondData($news);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $newsId): JsonResponse
     {
-        // TODO: Need to fix this.
-
-        // Set validation rules
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return redirect('news/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create news model instance with request
-            $address = new News($request->all());
+        $this->respondErrorOnValidationFail($validator);
 
-            // Save the news request
-            $result = $address->save();
+        $news = new News($request->all());
 
-            return $this->respondCondition($result, 'news.update_failed');
-        }
+        $result = $news->save();
+
+        return $this->respondCondition($result, $newsId, 'news.update_failed');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  News $news
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(News $news)
+    public function destroy(News $news): JsonResponse
     {
         $result = $news->delete();
 
-        return $this->respondCondition($result, 'news.destroy_failed');
+        return $this->respondCondition($result, $news->id, 'news.destroy_failed');
     }
 
-    public function search(Request $request, $searchString)
+    public function search(Request $request, $searchString): JsonResponse
     {
         $news = News::where('title', 'LIKE', "%{$searchString}%")
             ->get();

@@ -1,114 +1,68 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: AlexStevens
- * Date: 22/08/16
- * Time: 21:57
- */
 
 namespace App\Http\Controllers;
 
 use App\UserMark;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 
 class UserMarkController extends Controller
 {
-    public function index(UserMark $mark, int $userId): JsonResponse
+    public function index(UserMark $mark): JsonResponse
     {
-        // Store all marks data in $users
-        $marks = $mark::where('user_id', '=', $userId)->get();
 
-        // Return marks data
-        return $this->respondData($marks);
     }
 
     public function store(Request $request): JsonResponse
     {
-        // Set validation rules
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
-            'assignment' => 'required|string|max:255',
-            'percentage' => 'required|integer|max:3',
+            'assignment' => 'string|max:255',
+            'percentage' => 'integer|max:3',
         ]);
 
-        // Validate mark request
-        if ($validator->fails()) {
-            return redirect('mark/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create mark model instance with request
-            $mark = new UserMark($request->all());
+        $this->respondErrorOnValidationFail($validator);
 
-            // Save the mark request
-            $result = $mark->save();
+        $mark = new UserMark($request->all());
 
-            return $this->respondCondition($result, 'mark.store_failed');
-        }
+        $result = $mark->save();
+
+        return $this->respondCondition($result, $mark->id, 'user_mark.store_failed');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * TODO: perform id validation!!
-     *
-     * @param UserMark $mark
-     * @return \Illuminate\Http\Response
-     */
-    public function show(UserMark $mark)
+    public function show(UserMark $mark): JsonResponse
     {
-        return $this->respondData($mark);
+        $marks = $mark::where('user_id', '=', $mark->id)->get();
+
+        return $this->respondData($marks);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $markId): JsonResponse
     {
-        // TODO: Need to fix this.
-
-        // Set validation rules
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
-            'assignment' => 'required|string|max:255',
-            'percentage' => 'required|integer|max:3',
+            'assignment' => 'string|max:255',
+            'percentage' => 'integer|max:3',
         ]);
 
-        if ($validator->fails()) {
-            return redirect('mark/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create mark model instance with request
-            $mark = new UserMark($request->all());
+        $this->respondErrorOnValidationFail($validator);
 
-            // Save the mark request
-            $result = $mark->save();
+        $mark = new UserMark($request->all());
 
-            return $this->respondCondition($result, 'mark.update_failed');
-        }
+        $result = $mark->save();
+
+        return $this->respondCondition($result, $markId, 'user_mark.update_failed');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  UserMark $mark
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(UserMark $mark)
+    public function destroy(UserMark $mark): JsonResponse
     {
         $result = $mark->delete();
 
-        return $this->respondCondition($result, 'mark.destroy_failed');
+        return $this->respondCondition($result, $mark->id, 'user_mark.destroy_failed');
     }
 
-    public function search(Request $request, $searchString)
+    public function search(Request $request, $searchString): JsonResponse
     {
         $marks = UserMark::where('assignment', 'LIKE', "%{$searchString}%")
             ->get();

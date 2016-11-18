@@ -3,115 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\CourseAward;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 
 class CourseAwardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param CourseAward $award
-     * @return \Illuminate\Http\Response
-     */
-    public function index(CourseAward $award)
+    public function index(CourseAward $award): JsonResponse
     {
-        // Store all awards data in $users
         $awards = $award::all();
 
-        // Return awards data
         return $this->respondData($awards);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        // Set validation rules
         $validator = Validator::make($request->all(), [
             'course_id' => 'required|integer',
             'name' => 'required|string|max:255',
         ]);
 
-        // Validate addresses request
-        if ($validator->fails()) {
-            return redirect('award/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create address model instance with request
-            $award = new CourseAward($request->all());
+        $this->respondErrorOnValidationFail($validator);
 
-            // Save the address request
-            $result = $award->save();
+        $award = new CourseAward($request->all());
 
-            return $this->respondCondition($result, 'award.store_failed');
-        }
+        $result = $award->save();
+
+        return $this->respondCondition($result, $award->id, 'course_award.store_failed');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * TODO: perform id validation!!
-     *
-     * @param  CourseAward $award
-     * @return \Illuminate\Http\Response
-     */
-    public function show(CourseAward $award)
+    public function show(CourseAward $award): JsonResponse
     {
         return $this->respondData($award);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $awardId): JsonResponse
     {
-        // TODO: Need to fix this.
-
-        // Set validation rules
         $validator = Validator::make($request->all(), [
             'course_id' => 'required|integer',
             'name' => 'required|string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return redirect('award/')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            // Create address model instance with request
-            $award = new CourseAward($request->all());
+        $this->respondErrorOnValidationFail($validator);
 
-            // Save the address request
-            $result = $award->save();
+        $award = new CourseAward($request->all());
 
-            return $this->respondCondition($result, 'award.update_failed');
-        }
+        $result = $award->save();
+
+        return $this->respondCondition($result, $awardId, 'course_award.update_failed');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  CourseAward $award
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(CourseAward $award)
+    public function destroy(CourseAward $award): JsonResponse
     {
         $result = $award->delete();
 
-        return $this->respondCondition($result, 'award.destroy_failed');
+        return $this->respondCondition($result, $award->id, 'course_award.destroy_failed');
     }
 
-    public function search(Request $request, $searchString)
+    public function search(Request $request, $searchString): JsonResponse
     {
         $awards = CourseAward::where('name', 'LIKE', "%{$searchString}%")
             ->get();
