@@ -18,7 +18,8 @@ class EventController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'organizer_id' => 'required|integer',
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
@@ -26,7 +27,8 @@ class EventController extends Controller
             'location' => 'required|string|max:255',
             'price' => 'string|max:6',
             'limit_reservations' => 'integer',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 
@@ -44,7 +46,8 @@ class EventController extends Controller
 
     public function update(Request $request, int $eventId): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'organizer_id' => 'required|integer',
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
@@ -52,7 +55,8 @@ class EventController extends Controller
             'location' => 'required|string|max:255',
             'price' => 'string|max:6',
             'limit_reservations' => 'integer',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 

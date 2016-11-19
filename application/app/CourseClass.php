@@ -10,10 +10,10 @@ class CourseClass extends Model
         'created_at', 'updated_at', 'deleted_at',
     ];
 
-//    public function users()
-//    {
-//        return $this->belongsToMany('App\User');
-//    }
+    //    public function users()
+    //    {
+    //        return $this->belongsToMany('App\User');
+    //    }
 
     public function courses()
     {

@@ -18,11 +18,13 @@ class CoursePriceController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'course_id' => 'required|integer',
             'price' => 'required|string|max:255',
             'installments' => 'integer|max:5',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 
@@ -40,11 +42,13 @@ class CoursePriceController extends Controller
 
     public function update(Request $request, int $priceId): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'course_id' => 'required|integer',
             'price' => 'required|string|max:255',
             'installments' => 'integer|max:5',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 

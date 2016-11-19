@@ -36,10 +36,10 @@ class School extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-//    public function schoolUsers()
-//    {
-//        return $this->hasMany('App\SchoolUser');
-//    }
+    //    public function schoolUsers()
+    //    {
+    //        return $this->hasMany('App\SchoolUser');
+    //    }
 
     public function users()
     {

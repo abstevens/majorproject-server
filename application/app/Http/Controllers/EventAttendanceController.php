@@ -18,11 +18,13 @@ class EventAttendanceController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'event_id' => 'required|integer',
             'user_id' => 'required|integer',
             'status' => 'required|integer',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 
@@ -40,9 +42,11 @@ class EventAttendanceController extends Controller
 
     public function update(Request $request, int $attendanceId): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'status' => 'required|integer',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 

@@ -18,11 +18,13 @@ class NewsController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'user_id' => 'required|integer',
             'title' => 'required|string|max:255',
             'description' => 'string|max:255',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 
@@ -40,11 +42,13 @@ class NewsController extends Controller
 
     public function update(Request $request, int $newsId): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'user_id' => 'required|integer',
             'title' => 'required|string|max:255',
             'description' => 'string|max:255',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 

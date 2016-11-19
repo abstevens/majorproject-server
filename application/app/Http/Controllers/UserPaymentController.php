@@ -16,11 +16,13 @@ class UserPaymentController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'user_id' => 'required|integer',
             'amount' => 'string|max:255',
             'description' => 'string|max:255',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 
@@ -40,15 +42,17 @@ class UserPaymentController extends Controller
 
     public function update(Request $request, int $paymentId): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'user_id' => 'required|integer',
             'amount' => 'string|max:255',
             'description' => 'string|max:255',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 
-//        $result = $request->save();
+        //        $result = $request->save();
         $result = 1;
 
         return $this->respondCondition($result, $paymentId, 'user_payment.update_failed');

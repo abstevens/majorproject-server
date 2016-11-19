@@ -38,10 +38,12 @@ class Install extends Command
      */
     public function handle()
     {
-        $this->call('migrate', [
+        $this->call(
+            'migrate', [
             '--force' => true,
             '--seed' => $this->option('seed'),
-        ]);
+            ]
+        );
 
 
     }

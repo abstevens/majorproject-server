@@ -16,11 +16,13 @@ class UserMarkController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'user_id' => 'required|integer',
             'assignment' => 'string|max:255',
             'percentage' => 'integer|max:3',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 
@@ -40,11 +42,13 @@ class UserMarkController extends Controller
 
     public function update(Request $request, int $markId): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'user_id' => 'required|integer',
             'assignment' => 'string|max:255',
             'percentage' => 'integer|max:3',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 

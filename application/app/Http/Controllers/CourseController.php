@@ -18,10 +18,12 @@ class CourseController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'name' => 'required|string|max:255',
             'code' => 'int|max:255',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 
@@ -39,10 +41,12 @@ class CourseController extends Controller
 
     public function update(Request $request, int $courseId): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'name' => 'required|string|max:255',
             'code' => 'int|max:255',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 

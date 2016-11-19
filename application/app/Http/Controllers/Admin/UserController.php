@@ -19,12 +19,14 @@ class UserController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|string|max:60',
-        ]);
+            ]
+        );
 
         $this->respondErrorOnValidationFail($validator);
 
@@ -49,13 +51,15 @@ class UserController extends Controller
     {
         // TODO: Need to fix this.
 
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'username' => 'required|string|unique:username|max:255',
             'email' => 'required|email|unique:email|max:255',
             'password' => 'required|string|max:60',
-        ]);
+            ]
+        );
 
         if ($validator->fails()) {
             return redirect('user/')
