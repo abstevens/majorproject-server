@@ -21,7 +21,9 @@
         "fzaninotto/faker": "^1.6",
         "phpro/grumphp": "^0.9.6",
         "squizlabs/php_codesniffer": "^2.7",
-        "barryvdh/laravel-ide-helper": "^2.2"
+        "barryvdh/laravel-ide-helper": "^2.2",
+        "sebastian/phpcpd": "^2.0",
+        "sensiolabs/security-checker": "^4.0"
     },
     "autoload": {
         "classmap": [

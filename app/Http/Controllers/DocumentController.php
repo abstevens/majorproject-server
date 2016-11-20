@@ -16,7 +16,7 @@ class DocumentController extends Controller
         return $this->respondData($documents);
     }
 
-    function getDirContents($dir, &$results = [])
+    public function getDirContents($dir, &$results = [])
     {
         $files = scandir($dir);
 

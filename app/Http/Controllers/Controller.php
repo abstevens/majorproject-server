@@ -20,7 +20,7 @@ class Controller extends BaseController
         $this->user = auth()->user();
     }
 
-    protected function respondCondition(bool $result, $dataReturned = null, string $errorTranslation): JsonResponse
+    protected function respondCondition(bool $result, $dataReturned, string $errorTranslation): JsonResponse
     {
         if ($result) {
             $output = $this->respondData($dataReturned);
