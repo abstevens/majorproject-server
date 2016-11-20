@@ -1,11 +1,11 @@
 general:
   branches:
-    ignore:
+    only:
       - master
 
 machine:
   php:
-    version: 5.5.21
+    version: 7.1.0RC2
   node:
     version: 4.2.2
   ruby:
@@ -15,8 +15,8 @@ machine:
 
 dependencies:
   override:
-    - composer install -d ./application --no-interaction
+    - composer install --no-interaction
 
 test:
   override:
-    - ./application/vendor/bin/phing
+    - ./vendor/bin/phing

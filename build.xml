@@ -15,13 +15,13 @@
     </target>
 
     <target name="lint:php:cs" description="Check for compliance of PHP files with PSR-2">
-        <exec command="${project.basedir}/application/vendor/bin/php-cs-fixer fix --level=psr2 --dry-run -v --diff "
+        <exec command="${project.basedir}/vendor/bin/php-cs-fixer --config-file=${project.basedir}/.php_cs fix --dry-run -v --diff"
               checkreturn="true" passthru="true" />
     </target>
 
     <target name="lint:php:syntax" description="Check for syntax errors in PHP files">
         <phplint>
-            <fileset dir="${project.basedir}/application">
+            <fileset dir="${project.basedir}">
                 <include name="**/*.php"/>
             </fileset>
         </phplint>
