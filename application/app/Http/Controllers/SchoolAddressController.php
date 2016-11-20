@@ -11,13 +11,13 @@ class SchoolAddressController extends Controller
 {
     public function index(SchoolAddress $address): JsonResponse
     {
-
     }
 
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'street' => 'string|max:255',
             'city' => 'string|max:255',
             'country' => 'string|max:255',
@@ -44,7 +44,8 @@ class SchoolAddressController extends Controller
     public function update(Request $request, int $addressId): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'street' => 'string|max:255',
             'city' => 'string|max:255',
             'country' => 'string|max:255',

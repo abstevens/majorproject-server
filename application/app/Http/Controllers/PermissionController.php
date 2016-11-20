@@ -19,7 +19,8 @@ class PermissionController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'name' => 'required|string|max:255',
             'code' => 'integer|max:6',
             ]
@@ -42,7 +43,8 @@ class PermissionController extends Controller
     public function update(Request $request, int $permissionId): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'name' => 'required|string|max:255',
             'code' => 'integer|max:6',
             ]

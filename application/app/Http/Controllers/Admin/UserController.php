@@ -20,7 +20,8 @@ class UserController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
@@ -52,7 +53,8 @@ class UserController extends Controller
         // TODO: Need to fix this.
 
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'username' => 'required|string|unique:username|max:255',

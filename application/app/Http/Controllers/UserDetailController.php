@@ -11,13 +11,13 @@ class UserDetailController extends Controller
 {
     public function index(UserDetail $detail): JsonResponse
     {
-
     }
 
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'user_id' => 'required|integer',
             'type' => 'string|max:255',
             'value' => 'string|max:255',
@@ -43,7 +43,8 @@ class UserDetailController extends Controller
     public function update(Request $request, int $detailId): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'user_id' => 'required|integer',
             'type' => 'string|max:255',
             'value' => 'string|max:255',

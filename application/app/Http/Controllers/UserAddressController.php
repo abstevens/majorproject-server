@@ -11,13 +11,13 @@ class UserAddressController extends Controller
 {
     public function index(UserAddress $address): JsonResponse
     {
-
     }
 
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'user_id' => 'required|integer',
             'street' => 'string|max:255',
             'city' => 'string|max:255',
@@ -45,7 +45,8 @@ class UserAddressController extends Controller
     public function update(Request $request, int $addressId): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'user_id' => 'required|integer',
             'street' => 'string|max:255',
             'city' => 'string|max:255',

@@ -19,7 +19,8 @@ class EventController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'organizer_id' => 'required|integer',
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
@@ -47,7 +48,8 @@ class EventController extends Controller
     public function update(Request $request, int $eventId): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'organizer_id' => 'required|integer',
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',

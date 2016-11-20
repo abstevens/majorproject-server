@@ -19,7 +19,8 @@ class EventAttendanceController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'event_id' => 'required|integer',
             'user_id' => 'required|integer',
             'status' => 'required|integer',
@@ -43,7 +44,8 @@ class EventAttendanceController extends Controller
     public function update(Request $request, int $attendanceId): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'status' => 'required|integer',
             ]
         );

@@ -11,13 +11,13 @@ class SchoolContactController extends Controller
 {
     public function index(SchoolContact $contact): JsonResponse
     {
-
     }
 
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'user_id' => 'required|integer',
             'type' => 'string|max:255',
             'value' => 'string|max:255',
@@ -43,7 +43,8 @@ class SchoolContactController extends Controller
     public function update(Request $request, int $contactId): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'user_id' => 'required|integer',
             'type' => 'string|max:255',
             'value' => 'string|max:255',

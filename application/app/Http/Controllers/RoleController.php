@@ -19,7 +19,8 @@ class RoleController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'name' => 'required|string|max:255',
             ]
         );
@@ -41,7 +42,8 @@ class RoleController extends Controller
     public function update(Request $request, int $roleId): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'name' => 'required|string|max:255',
             ]
         );

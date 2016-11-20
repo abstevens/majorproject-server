@@ -19,7 +19,8 @@ class CourseController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'name' => 'required|string|max:255',
             'code' => 'int|max:255',
             ]
@@ -42,7 +43,8 @@ class CourseController extends Controller
     public function update(Request $request, int $courseId): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'name' => 'required|string|max:255',
             'code' => 'int|max:255',
             ]

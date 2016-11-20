@@ -11,13 +11,13 @@ class UserPaymentController extends Controller
 {
     public function index(UserPayment $payment): JsonResponse
     {
-
     }
 
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'user_id' => 'required|integer',
             'amount' => 'string|max:255',
             'description' => 'string|max:255',
@@ -43,7 +43,8 @@ class UserPaymentController extends Controller
     public function update(Request $request, int $paymentId): JsonResponse
     {
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'user_id' => 'required|integer',
             'amount' => 'string|max:255',
             'description' => 'string|max:255',

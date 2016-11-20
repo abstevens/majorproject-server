@@ -20,11 +20,11 @@ class DocumentController extends Controller
     {
         $files = scandir($dir);
 
-        foreach($files as $key => $value) {
+        foreach ($files as $key => $value) {
             $path = realpath($dir.DIRECTORY_SEPARATOR.$value);
             if (!is_dir($path)) {
                 $results[$value] = '/documents/'.$value;
-            } else if ($value != "." && $value != "..") {
+            } elseif ($value != "." && $value != "..") {
                 $this->getDirContents($path, $results[$value]);
             }
         }

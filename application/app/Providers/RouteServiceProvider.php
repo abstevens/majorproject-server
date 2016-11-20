@@ -55,7 +55,8 @@ class RouteServiceProvider extends ServiceProvider
             [
             'middleware' => 'web',
             'namespace' => $this->namespace,
-            ], function ($router) {
+            ],
+            function ($router) {
                 include base_path('routes/web.php');
             }
         );
@@ -75,7 +76,8 @@ class RouteServiceProvider extends ServiceProvider
             'middleware' => ['api', 'cors', 'auth:api'],
             'namespace' => $this->namespace,
             'prefix' => 'v1',
-            ], function ($router) {
+            ],
+            function ($router) {
                 include base_path('routes/api.php');
             }
         );
