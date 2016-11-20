@@ -43,7 +43,8 @@ class UserController extends Controller
 
     public function show(User $user): JsonResponse
     {
-        $user = User::with('marks', 'details', 'contacts', 'addresses', 'courses.classes', 'schoolUsers')->find($user->id);
+        $user = User::with('marks', 'details', 'contacts', 'addresses', 'courses.classes', 'schoolUsers')
+                ->find($user->id);
 
         return $this->respondData($user);
     }
