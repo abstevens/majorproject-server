@@ -20,10 +20,10 @@
         "phing/phing": "^2.14",
         "fzaninotto/faker": "^1.6",
         "phpro/grumphp": "^0.9.6",
-        "squizlabs/php_codesniffer": "^2.7",
         "barryvdh/laravel-ide-helper": "^2.2",
         "sebastian/phpcpd": "^2.0",
-        "sensiolabs/security-checker": "^4.0"
+        "sensiolabs/security-checker": "^4.0",
+        "friendsofphp/php-cs-fixer": "^1.12"
     },
     "autoload": {
         "classmap": [
