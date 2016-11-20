@@ -5,7 +5,7 @@ general:
 
 machine:
   php:
-    version: 7.1.0RC2
+    version: 7.0.11
   node:
     version: 4.2.2
   ruby:
