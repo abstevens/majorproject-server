@@ -10,12 +10,8 @@ class ExampleTest extends TestCase
     // Reverts all the changes to the DB automatically after the test finishes
     use DatabaseTransactions;
 
-    /**
-     * A basic functional test example.
-     *
-     * @return void
-     */
-    public function testBasicExample()
+    /** @test */
+    public function my_first_test()
     {
     }
 }
