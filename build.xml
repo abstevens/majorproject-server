@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="MajorProject"> <!--default="lint"-->
+<project name="MajorProject" default="lint">
     <target name="clean">
         <delete dir="${project.basedir}/build" />
     </target>
 
-    <!--<target name="lint" depends="clean" description="Check for syntax errors and violation of coding style standards">-->
-        <!--<phingcall target="lint:php" />-->
-    <!--</target>-->
+    <target name="lint" depends="clean" description="Check for syntax errors and violation of coding style standards">
+        <phingcall target="lint:php" />
+    </target>
 
-    <!--<target name="lint:php" description="Check for syntax errors and violation of coding style standards in PHP files">-->
-        <!--<phingcall target="lint:php:cs" />-->
-        <!--<phingcall target="lint:php:syntax" />-->
-    <!--</target>-->
+    <target name="lint:php" description="Check for syntax errors and violation of coding style standards in PHP files">
+        <phingcall target="lint:php:cs" />
+        <phingcall target="lint:php:syntax" />
+    </target>
 
-    <!--<target name="lint:php:cs" description="Check for compliance of PHP files with PSR-2">-->
-        <!--<exec command="${project.basedir}/vendor/bin/php-cs-fixer &#45;&#45;config-file=${project.basedir}/.php_cs fix &#45;&#45;dry-run -v &#45;&#45;diff"-->
-              <!--checkreturn="true" passthru="true" />-->
-    <!--</target>-->
+    <target name="lint:php:cs" description="Check for compliance of PHP files with PSR-2">
+        <exec command="${project.basedir}/vendor/bin/php-cs-fixer --config-file=${project.basedir}/.php_cs fix --dry-run -v --diff"
+              checkreturn="true" passthru="true" />
+    </target>
 
-    <!--<target name="lint:php:syntax" description="Check for syntax errors in PHP files">-->
-        <!--<phplint>-->
-            <!--<fileset dir="${project.basedir}">-->
-                <!--<include name="**/*.php"/>-->
-            <!--</fileset>-->
-        <!--</phplint>-->
-    <!--</target>-->
+    <target name="lint:php:syntax" description="Check for syntax errors in PHP files">
+        <phplint>
+            <fileset dir="${project.basedir}">
+                <include name="**/*.php"/>
+            </fileset>
+        </phplint>
+    </target>
 </project>
