@@ -14,9 +14,16 @@ machine:
     Europe/Amsterdam
 
 dependencies:
+  cache_directories:
+      - vendor
+      - ~/.composer/cache
   override:
     - composer install --no-interaction
 
 test:
+  pre:
+    - mkdir -p $CIRCLE_TEST_REPORTS/phpunit
   override:
-    - ./vendor/bin/phing
+    - ./vendor/bin/grumphp run
+  post:
+    - cp /tmp/junit.xml $CIRCLE_TEST_REPORTS/phpunit/junit.xml
