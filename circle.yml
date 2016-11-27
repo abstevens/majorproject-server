@@ -1,6 +1,6 @@
 general:
   branches:
-    only:
+    ignore:
       - master
 
 machine:
