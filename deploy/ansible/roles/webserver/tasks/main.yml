@@ -1,7 +1,7 @@
 ---
 - include: nginx.yml
 - include: mysql_install.yml
-#- include: mysql_setup.yml
+- include: mysql_setup.yml
 - include: redis.yml
 - include: node_npm.yml
 - include: bower.yml
