@@ -10,7 +10,8 @@
         "barryvdh/laravel-cors": "^0.8.0",
         "predis/predis": "^1.1",
         "doctrine/dbal": "^2.5",
-        "laravel/passport": "^1.0"
+        "laravel/passport": "^1.0",
+        "fzaninotto/faker": "^1.6"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
@@ -18,7 +19,6 @@
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
         "phing/phing": "^2.14",
-        "fzaninotto/faker": "^1.6",
         "phpro/grumphp": "^0.9.6",
         "barryvdh/laravel-ide-helper": "^2.2",
         "sebastian/phpcpd": "^2.0",
@@ -54,8 +54,6 @@
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan ide-helper:generate",
-            "php artisan ide-helper:meta",
             "php artisan optimize"
         ]
     },
