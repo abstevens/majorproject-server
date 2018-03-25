@@ -12,12 +12,12 @@ Vagrant.configure(2) do |config|
     config.vm.network "private_network", ip: "10.5.5.15"
     config.vm.network "forwarded_port", guest: 22, host: 2215, auto_correct: true
 
-    config.vm.hostname = "api.majorproject.dev"
+    config.vm.hostname = "api.mjp.test"
 
     config.vm.synced_folder ".", "/vagrant", disabled: true
     config.vm.synced_folder ".", "/home/vagrant/sync", disabled: true
 
-    config.vm.synced_folder "./application", "/var/www", :nfs => { group: "nginx", owner: "nginx" }, :mount_options => ['nolock,vers=3,udp,noatime']
+    config.vm.synced_folder ".", "/var/www", :nfs => { group: "nginx", owner: "nginx" }, :mount_options => ['nolock,vers=3,udp,noatime']
 
     # Vagrant HostManager Plugin
     # Installation: "vagrant plugin install vagrant-hostmanager"
