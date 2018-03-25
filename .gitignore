@@ -39,6 +39,7 @@ Temporary Items
 .vagrant
 vendor
 public/uploads
+node_modules
 
 # Sensitive or high-churn files:
 .idea/dataSources.ids
