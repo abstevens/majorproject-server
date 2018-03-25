@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        function get_index(token)
+        {
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "http://api.mjp.test/v1/user",
+                "method": "GET",
+                "headers": {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token,
+                    "Cache-Control": "no-cache"
+                }
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+            });
+        }
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "http://api.mjp.test/oauth/token",
+            "method": "POST",
+            "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache"
+            },
+            "processData": false,
+            "data": "{\n\t\"grant_type\": \"password\",\n\t\n\t\"client_id\": 1,\n\t\"client_secret\": \"KyHacYa2Q7DCTVLaDe1RSnvTlTI20CrmYb7FXujb\",\n\t\n\t\"username\": \"admin1@test.com\",\n\t\"password\": \"1111\",\n\t\n\t\"scope\": \"*\"\n}"
+        };
+
+        $.ajax(settings).done(function (response) {
+            // console.log(response);
+            var access_token = response.access_token;
+            get_index(access_token);
+        });
+    </script>
+</body>
+</html>
