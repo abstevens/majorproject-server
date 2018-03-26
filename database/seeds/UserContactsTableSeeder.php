@@ -13,8 +13,6 @@ class UserContactsTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: UserContactsTableSeeder... ";
-
         $users = User::pluck('id');
         $type = [
             'phone',

@@ -13,8 +13,6 @@ class NewsTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: NewsTableSeeder... ";
-
         $users = User::pluck('id');
 
         $users->each(function ($user) {

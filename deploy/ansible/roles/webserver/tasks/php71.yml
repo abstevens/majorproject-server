@@ -1,0 +1,45 @@
+---
+- name: Install php71
+  yum:
+    name={{ item }}
+    state=present
+    disable_gpg_check=yes
+  with_items:
+    - php71w
+    - php71w-cli
+    - php71w-common
+    - php71w-fpm
+    - php71w-gd
+    - php71w-intl
+    - php71w-mbstring
+    - php71w-mcrypt
+    - php71w-mysqlnd
+    - php71w-pdo
+    - php71w-pear
+    - php71w-pecl-imagick
+    - php71w-pecl-xdebug
+    - php71w-tidy
+    - php71w-xml
+
+#- name: Delete default php conf files
+#  file: path=/etc/opt/remi/php70/{{ item }} state=absent
+#  with_items:
+#    - php.d/15-xdebug.ini
+#    - php-fpm.d
+#    - php.ini
+#    - php-fpm.conf
+#
+#- name: Link php conf files
+#  file: src=/var/www/application/deploy/ansible/roles/webserver/files/php56/{{ item }} dest=/opt/remi/php56/root/etc/{{ item }} state=link
+#  with_items:
+#    - php.d/15-xdebug.ini
+#    - php-fpm.d
+#    - php.ini
+#    - php-fpm.conf
+
+#- name: Fix permissions for php storage
+#  file: path=/var/opt/remi/php70 owner=nginx group=nginx
+#  # try  state=touch and/or recurse=yes
+
+- name: Boot and start php-fpm
+  service: name=php-fpm enabled=yes state=started

@@ -14,8 +14,6 @@ class RoleUsersTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: RoleUsersTableSeeder... ";
-
         $users = User::pluck('id');
         $roles = Role::pluck('id');
 

@@ -13,8 +13,6 @@ class EventsTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: EventsTableSeeder... ";
-
         $users = User::pluck('id');
 
         $maxEventOwners = round($users->count() / 5);

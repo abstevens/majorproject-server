@@ -14,8 +14,6 @@ class CourseUsersTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: CourseUsersTableSeeder... ";
-
         $courses =  Course::pluck('id');
         $users =  User::pluck('id');
 

@@ -12,8 +12,6 @@ class CoursesTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: CoursesTableSeeder... ";
-
         factory(Course::class, 25)->create();
     }
 }

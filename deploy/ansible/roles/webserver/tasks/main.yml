@@ -6,6 +6,7 @@
 - include: node_npm.yml
 - include: bower.yml
 - include: grunt.yml
-# - include: php56.yml
-- include: php70.yml
+#- include: php56.yml
+#- include: php70.yml
+- include: php71.yml
 - include: composer.yml

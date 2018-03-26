@@ -13,8 +13,6 @@ class SchoolContactsTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: SchoolContactsTableSeeder... ";
-
         $schools = School::pluck('id');
         $type = [
             'website',

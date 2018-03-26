@@ -14,8 +14,6 @@ class SchoolCoursesTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: SchoolCoursesTableSeeder... ";
-
         $schools =  School::pluck('id');
         $courses =  Course::pluck('id');
 
@@ -24,12 +22,6 @@ class SchoolCoursesTableSeeder extends Seeder
             $schoolCourse = $courses->random($randomCourseAmount);
 
             $schoolCourse->each(function ($course) use ($school) {
-//                DB::table('school_course')->insert(
-//                    [
-//                        'school_id' => $school,
-//                        'course_id' => $course,
-//                    ]
-//                );
                 factory(SchoolCourse::class)->create([
                     'school_id' => $school,
                     'course_id' => $course,

@@ -13,8 +13,6 @@ class UserPaymentsTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: UserPaymentsTableSeeder... ";
-
         $users = User::pluck('id');
 
         $users->each(function ($user) {

@@ -12,8 +12,6 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: RolesTableSeeder... ";
-
         factory(Role::class, 10)->create();
     }
 }

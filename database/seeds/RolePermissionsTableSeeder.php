@@ -14,8 +14,6 @@ class RolePermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: RolePermissionsTableSeeder... ";
-
         $roles =  Role::pluck('id');
         $permissions =  Permission::pluck('id');
 
@@ -24,10 +22,6 @@ class RolePermissionsTableSeeder extends Seeder
             $rolePermissions = $permissions->random($randomPermissionsAmount);
 
             $rolePermissions->each(function ($permission) use ($role) {
-//                DB::table('role_permission')->insert([
-//                    'role_id' => $role,
-//                    'permission_id' => $permission,
-//                ]);
                 factory(RolePermission::class)->create([
                     'role_id' => $role,
                     'permission_id' => $permission,

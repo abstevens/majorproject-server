@@ -12,8 +12,6 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: PermissionsTableSeeder... ";
-
         factory(Permission::class, 20)->create();
     }
 }

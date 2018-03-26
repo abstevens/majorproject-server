@@ -13,8 +13,6 @@ class UserDetailsTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: UserDetailsTableSeeder... ";
-
         $users = User::pluck('id');
 
         $users->each(function ($user) {

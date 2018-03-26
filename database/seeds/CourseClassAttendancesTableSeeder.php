@@ -14,8 +14,6 @@ class CourseClassAttendancesTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: CourseClassAttendancesTableSeeder... ";
-
         $classes =  CourseClass::pluck('id');
         $course_users =  CourseUser::pluck('id');
 
@@ -24,12 +22,6 @@ class CourseClassAttendancesTableSeeder extends Seeder
             $courseUserAttendances = $course_users->random($randomCourseUserAmount);
 
             $courseUserAttendances->each(function ($course_user) use ($class) {
-//                DB::table('course_class_attendance')->insert(
-//                    [
-//                        'course_user_id' => $class,
-//                        'class_id' => $user,
-//                    ]
-//                );
                 factory(CourseClassAttendance::class)->create([
                     'course_user_id' => $course_user,
                     'class_id' => $class,

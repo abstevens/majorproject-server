@@ -13,8 +13,6 @@ class CoursePricesTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: CoursePricesTableSeeder... ";
-
         $courses =  Course::pluck('id');
         $installments = ['200', '400', '800'];
 

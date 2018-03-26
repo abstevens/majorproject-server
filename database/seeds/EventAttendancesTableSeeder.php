@@ -14,8 +14,6 @@ class EventAttendancesTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: EventAttendancesTableSeeder... ";
-
         $users =  User::pluck('id');
         $events = Event::pluck('id');
         $eventCount = $events->count();

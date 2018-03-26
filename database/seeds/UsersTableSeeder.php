@@ -12,8 +12,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: UsersTableSeeder... ";
-
         User::updateOrCreate(
             [
                 'first_name' => 'Test',

@@ -13,8 +13,6 @@ class CourseClassesTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: CourseClassesTableSeeder... ";
-
         $courses =  Course::pluck('id');
 
         $courses->each(function ($course) {

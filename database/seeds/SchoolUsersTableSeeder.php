@@ -14,8 +14,6 @@ class SchoolUsersTableSeeder extends Seeder
      */
     public function run()
     {
-        echo "Seeding: SchoolUsersTableSeeder... ";
-
         /** @var $users \Illuminate\Database\Eloquent\Collection */
         $users = User::pluck('id')->toArray();
         $schools = School::pluck('id');
