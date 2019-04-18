@@ -32,14 +32,3 @@ connect to the database, use `127.0.0.1` as Host, `root` as Username and `majorp
 ### majorproject-client:
 There is a working client of the server. Together the project functions as an Educational Management System (EMS). In order for creation of a 
 full EMS, there will also need to be installation for client side works. You can follow the README.md file in the link below.
-
-**https://bitbucket.org/niklas_lang/ems_frontend_dev/**
-
-### Feel free to contact us if there are any issues
-
-##### Server:
-- Alexander Stevens - alexanderbilliestevens@gmail.com
-
-##### Client:
-- Dylan Carver - dylancarv@gmail.com
-- Niklas Lang - contis2908@gmail.com
